@@ -1,0 +1,11 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: demo
+          predicates:
+            - Header=im_route,test
+            - Path=/test/**
+          uri: http://127.0.0.1:9999
+          filter:
+            - StripPrefix=1
