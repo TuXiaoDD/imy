@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("test")
+@RequestMapping("/test")
 public class TestController {
 
-    @GetMapping("test")
+    @GetMapping("/test")
     public List<LoginVO> test(){
         LoginVO loginVO = new LoginVO();
         loginVO.setExpires_in(100L);

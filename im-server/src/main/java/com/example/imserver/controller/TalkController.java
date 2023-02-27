@@ -11,7 +11,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/talk")
 public class TalkController {
-    @GetMapping("list")
+    @GetMapping("/list")
     public List<TalkListVO> list() {
         List<TalkListVO> list= new ArrayList<>();
         return list;
