@@ -4,6 +4,7 @@ import com.example.imserver.controller.dto.LoginDTO;
 import com.example.imserver.controller.dto.RegisterDTO;
 import com.example.imserver.controller.dto.SmsCodeDTO;
 import com.example.imserver.controller.vo.LoginVO;
+import com.example.imserver.controller.vo.SettingVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,6 +13,11 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 public class AuthController {
 
+    /**
+     * 登录
+     * @param dto
+     * @return
+     */
     @PostMapping("/login")
     public LoginVO login(@RequestBody LoginDTO dto){
         log.info("dto:{}",dto);
@@ -20,6 +26,12 @@ public class AuthController {
         loginVO.setExpires_in(86400L);
         return loginVO;
     }
+
+    /**
+     * 注册
+     * @param dto
+     * @return
+     */
     @PostMapping("/register")
     public String register(@RequestBody RegisterDTO dto){
 
@@ -27,8 +39,12 @@ public class AuthController {
     }
 
     @GetMapping("test")
-    public String test(){
-        return "test";
+    public SettingVO test(){
+        SettingVO settingVO = new SettingVO();
+        settingVO.setThemeBagImg("test4");
+        settingVO.setNotifyCueTone("test2");
+        settingVO.setThemeMode("test1");
+        return settingVO;
     }
 
 
