@@ -16,4 +16,11 @@ public class TalkController {
         List<TalkListVO> list= new ArrayList<>();
         return list;
     }
+
+
+    @GetMapping("/records")
+    public List<TalkListVO> list() {
+        List<TalkListVO> list= new ArrayList<>();
+        return list;
+    }
 }

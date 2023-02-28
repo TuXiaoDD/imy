@@ -1,27 +1,29 @@
 package com.example.imserver.interceptor;
 
 import org.springframework.stereotype.Component;
+import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.example.common.utils.DataUtils;
+import com.example.imserver.annotation.NotRequireLogin;
 
 @Component
 public class RequestInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        try {
-            //判断是否登录
-            if (verifyPermissions(request)) {
-                return true;
-            }
-            //这里设置拦截以后重定向的页面，一般设置为登陆页面地址
-//            response.sendRedirect();
-
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (DataUtils.isNotEmpty(handler) && handler instanceof HandlerMethod) {
+            return true;
         }
+        //标记了NotRequireLogin注解的方法不需要登录验证
+        NotRequireLogin annotation = ((HandlerMethod) handler).getMethodAnnotation(NotRequireLogin.class);
+        if(DataUtils.isNotEmpty(annotation)) {
+            return true;
+        }
+
         return true;
     }
 

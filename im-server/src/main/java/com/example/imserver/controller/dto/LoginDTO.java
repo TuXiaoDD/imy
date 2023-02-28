@@ -8,6 +8,6 @@ public class LoginDTO {
 
     private String password;
 
-    private String platform;
+    private String platform = "web";
 
 }
