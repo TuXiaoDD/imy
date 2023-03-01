@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -17,7 +18,9 @@ public class TestController {
         LoginVO loginVO = new LoginVO();
         loginVO.setExpires_in(100L);
         loginVO.setAccess_token("2321");
-        return List.of(loginVO);
+        List<LoginVO> list = new ArrayList<>();
+        list.add(loginVO);
+        return list;
     }
 
 }
