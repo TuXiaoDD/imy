@@ -16,8 +16,8 @@ public class TestController {
     @GetMapping("/test")
     public List<LoginVO> test(){
         LoginVO loginVO = new LoginVO();
-        loginVO.setExpires_in(100L);
-        loginVO.setAccess_token("2321");
+        loginVO.setExpiresIn(100L);
+        loginVO.setAccessToken("2321");
         List<LoginVO> list = new ArrayList<>();
         list.add(loginVO);
         return list;

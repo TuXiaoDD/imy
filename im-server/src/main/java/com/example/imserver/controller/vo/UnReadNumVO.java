@@ -1,8 +1,10 @@
 package com.example.imserver.controller.vo;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
 public class UnReadNumVO {
-    private Long unread_num;
+    @JsonProperty("unread_num")
+    private Long unreadNum;
 }

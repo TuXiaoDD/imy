@@ -1,5 +1,6 @@
 package com.example.imserver.controller.vo;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -20,26 +21,33 @@ public class TalkListVO {
          *
          */
         private Long id;
-
-        private Integer is_disturb;
-
-        private Integer is_online;
-        private Integer is_robot;
+        @JsonProperty("is_disturb")
+        private Integer isDisturb;
+        @JsonProperty("is_online")
+        private Integer isOnline;
+        @JsonProperty("is_robot")
+        private Integer isRobot;
+        @JsonProperty("isTop")
         private Integer is_top;
-
-        private Integer receiver_id;
+        @JsonProperty("receiver_id")
+        private Integer receiverId;
         /**
          * 未读消息数
          */
-        private Long unread_num;
+        @JsonProperty("unread_num")
+        private Long unreadNum;
         /**
          * 聊天类型
          */
-        private Integer talk_type;
-        private String msg_text;
+        @JsonProperty("talk_type")
+        private Integer talkType;
+        @JsonProperty("msg_text")
+        private String msgText;
         private String name;
-        private String remark_name;
-        private LocalDateTime updated_at;
+        @JsonProperty("remark_name")
+        private String remarkName;
+        @JsonProperty("updated_at")
+        private LocalDateTime updatedAt;
 
 
     }

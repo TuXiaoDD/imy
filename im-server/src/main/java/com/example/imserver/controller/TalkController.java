@@ -21,6 +21,7 @@ public class TalkController {
     @GetMapping("/list")
     public List<TalkListVO> list() {
         List<TalkListVO> list = new ArrayList<>();
+
         return list;
     }
 

@@ -27,8 +27,7 @@ public class UserController {
      */
     @GetMapping("/setting")
     public UserSettingVO setting() {
-
-        return new UserSettingVO();
+        return userService.getSetting();
     }
 
     /**
