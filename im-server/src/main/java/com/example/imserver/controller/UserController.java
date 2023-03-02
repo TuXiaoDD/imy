@@ -1,11 +1,9 @@
 package com.example.imserver.controller;
 
-import com.example.imserver.controller.dto.LoginDTO;
-import com.example.imserver.controller.vo.LoginVO;
 import com.example.imserver.controller.vo.UserDetailVO;
 import com.example.imserver.controller.vo.UserSettingVO;
 import com.example.imserver.entity.UserDO;
-import com.example.imserver.service.UserService;
+import com.example.imserver.service.impl.UserServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +16,7 @@ import java.util.List;
 public class UserController {
 
     @Autowired
-    UserService userService;
+    UserServiceImpl userService;
 
     /**
      * 用户相关设置

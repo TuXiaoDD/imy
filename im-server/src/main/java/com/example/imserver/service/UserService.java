@@ -1,23 +1,22 @@
 package com.example.imserver.service;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.example.imserver.controller.dto.RegisterDTO;
 import com.example.imserver.entity.UserDO;
-import com.example.imserver.mapper.UserDao;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
-public class UserService {
+/**
+ * @packageName: com.example.imserver.service
+ * @className: UserService
+ * @author: leMin
+ * @date: 2023/3/3  0:40
+ * @description:
+ */
+public interface UserService {
+    List<UserDO> query();
 
-    @Autowired
-    UserDao userDao;
+    RegisterDTO selectUser(String mobile);
 
-    public List<UserDO> query(){
-        LambdaQueryWrapper<UserDO> wrapper = new LambdaQueryWrapper<>();
-        return userDao.selectList(wrapper);
-    }
+    Integer register(String nickname, String password, String mobile);
 
 }
