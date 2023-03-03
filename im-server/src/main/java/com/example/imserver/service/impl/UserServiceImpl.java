@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService {
         String validPattern = "[`~!@#$%^&*()+=|{}':;',\\\\[\\\\].<>/?~！@#￥%……&*（）——+|{}【】‘；：”“’。，、？]";
         Matcher matcher = Pattern.compile(validPattern).matcher(mobile);
         if (matcher.find()) {
-            throw new BizException(ResultCode.PARAM_BIND_ERROR, "输入的手机号包含特殊字符");
+            throw new BizException(ResultCode.PARAM_BIND_ERROR, "输入的手机号包含特殊字符！");
         }
         //2、该手机号是否已注册
         QueryWrapper<UserDO> wrapper = new QueryWrapper<>();
@@ -53,9 +53,9 @@ public class UserServiceImpl implements UserService {
         if (count > 0) {
             throw new BizException("该用户已注册!");
         }
-        //2、账户不小于4位
+        //2、密码长度不小于4位
         if (password.length() < 4) {
-            throw new BizException("密码长度请设置大于4位");
+            throw new BizException("密码长度请设置大于4位！");
         }
         //密码加密
         String encryptPassword = DigestUtils.md5DigestAsHex((SALT + password).getBytes());

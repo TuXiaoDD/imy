@@ -44,10 +44,10 @@ public class AuthController {
      * @return
      */
     @PostMapping("/register")
-    public Response<Long> register(@RequestBody RegisterDTO dto){
+    public Long register(@RequestBody RegisterDTO dto){
         //1、校验注册参数
         if (Objects.isNull(dto)) {
-            return Response.fail("注册用户为空！");
+            throw new BizException(ResultCode.NOT_FOUND, "请填写注册信息！");
         }
         String mobile = dto.getMobile();
         String nickName = dto.getNickName();
@@ -57,7 +57,8 @@ public class AuthController {
         }
         //2、注册账号，落地账户信息
         Long id = userService.register(nickName, password, mobile);
-        return Response.data(id, "注册成功！");
+        log.info("注册成功返回用户id为：<{}>", id);
+        return id;
     }
 
     @GetMapping("test")
