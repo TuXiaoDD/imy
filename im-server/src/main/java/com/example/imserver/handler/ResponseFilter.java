@@ -1,6 +1,8 @@
-package com.example.imserver.filter;
+package com.example.imserver.handler;
 
 import com.example.common.response.Response;
+import com.example.common.utils.DataUtils;
+
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
 import org.springframework.http.server.ServerHttpRequest;
@@ -20,12 +22,11 @@ public class ResponseFilter implements ResponseBodyAdvice<Object> {
         return true;
     }
 
-    // todo 2023-02-26 17:26:47 异常处理
     @Override
     public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType, Class selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
-        if (Objects.equals(returnType.getMethod().getName(),"error")) {
+        if (Objects.equals(returnType.getMethod().getName(),"error")||
+                DataUtils.isNotEmpty(returnType.getMethodAnnotation(ExceptionHandler.class))) {
             //处理异常，可以再添加一个异常处理的类，用于处理异常返回格式
-
             return body;
         }
 

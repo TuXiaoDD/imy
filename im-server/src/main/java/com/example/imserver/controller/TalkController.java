@@ -38,7 +38,7 @@ public class TalkController {
 
 
     @GetMapping("/records")
-    public List<TalkListVO> list() {
+    public List<TalkListVO> records() {
         List<TalkListVO> list= new ArrayList<>();
         return list;
     }

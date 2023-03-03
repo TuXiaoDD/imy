@@ -128,6 +128,10 @@ public class Response<T> implements Serializable {
         return new Response<>(resultCode, msg);
     }
 
+    public static <T> Response<T> fail(IResultCode resultCode) {
+        return new Response<>(resultCode, resultCode.getMessage());
+    }
+
     /**
      * 返回R
      *

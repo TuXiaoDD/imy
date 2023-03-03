@@ -14,7 +14,8 @@ import java.util.List;
 public class TestController {
 
     @GetMapping("/test")
-    public List<LoginVO> test(){
+    public List<LoginVO> test(Long id){
+        String s = id.toString();
         LoginVO loginVO = new LoginVO();
         loginVO.setExpiresIn(100L);
         loginVO.setAccessToken("2321");
