@@ -8,8 +8,8 @@ import lombok.NoArgsConstructor;
 @Data
 public class RegisterDTO {
 
-    @JsonProperty("nickname")
-    private String nickname;
+    @JsonProperty("nickName")
+    private String nickName;
 
     @JsonProperty("password")
     private String password;

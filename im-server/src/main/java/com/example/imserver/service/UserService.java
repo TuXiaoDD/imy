@@ -1,6 +1,7 @@
 package com.example.imserver.service;
 
 import com.example.imserver.controller.dto.RegisterDTO;
+import com.example.imserver.controller.vo.UserSettingVO;
 import com.example.imserver.entity.UserDO;
 
 import java.util.List;
@@ -17,12 +18,7 @@ public interface UserService {
 
     RegisterDTO selectUser(String mobile);
 
-    Integer register(String nickname, String password, String mobile);
+    Long register(String nickName, String password, String mobile);
 
-    public UserSettingVO getSetting() {
-        UserSettingVO vo = new UserSettingVO();
-        UserDO userDO = userDao.selectById(1);
-        vo.setUserInfo(UserConverter.userDO2UserInfoVO(userDO));
-        return vo;
-    }
+    UserSettingVO getSetting();
 }

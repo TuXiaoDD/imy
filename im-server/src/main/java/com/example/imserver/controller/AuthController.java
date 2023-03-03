@@ -1,9 +1,13 @@
 package com.example.imserver.controller;
 
+import com.example.common.exception.BizException;
+import com.example.common.response.Response;
+import com.example.common.response.ResultCode;
 import com.example.imserver.controller.dto.LoginDTO;
 import com.example.imserver.controller.dto.RegisterDTO;
 import com.example.imserver.controller.vo.LoginVO;
 import com.example.imserver.controller.vo.SettingVO;
+import com.example.imserver.service.UserService;
 import com.example.imserver.service.impl.UserServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -18,7 +22,7 @@ import java.util.Objects;
 public class AuthController {
 
     @Autowired
-    UserServiceImpl userService;
+    UserService userService;
 
     /**
      * 登录
@@ -40,25 +44,20 @@ public class AuthController {
      * @return
      */
     @PostMapping("/register")
-    public String register(@RequestBody RegisterDTO dto){
+    public Response<Long> register(@RequestBody RegisterDTO dto){
         //1、校验注册参数
         if (Objects.isNull(dto)) {
-            return "注册用户为空！";
+            return Response.fail("注册用户为空！");
         }
         String mobile = dto.getMobile();
-        String nickname = dto.getNickname();
+        String nickName = dto.getNickName();
         String password = dto.getPassword();
-        if (StringUtils.isAnyBlank(mobile, nickname, password)) {
-            return "注册参数未填写完整！";
+        if (StringUtils.isAnyBlank(mobile, nickName, password)) {
+            throw new BizException(ResultCode.PARAM_BIND_ERROR, "注册参数含空值，请检查注册要素！");
         }
-        //2、是否已注册
-        RegisterDTO registerDTO = userService.selectUser(mobile);
-        if (Objects.nonNull(registerDTO)) {
-            return "该用户已存在！";
-        }
-        //3、注册账号，落地账户信息
-        Integer id = userService.register(nickname, password, mobile);
-        return "";
+        //2、注册账号，落地账户信息
+        Long id = userService.register(nickName, password, mobile);
+        return Response.data(id, "注册成功！");
     }
 
     @GetMapping("test")
