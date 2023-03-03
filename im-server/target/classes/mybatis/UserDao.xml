@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.imserver.mapper.UserDao">
+<!--  <resultMap id="BaseResultMap" type="com.example.imserver.entity.UserDO">-->
+<!--    <id column="id" jdbcType="BIGINT" property="id" />-->
+<!--    <result column="nickname" jdbcType="VARCHAR" property="nickname" />-->
+<!--    <result column="mobile" jdbcType="CHAR" property="mobile" />-->
+<!--    <result column="email" jdbcType="VARCHAR" property="email" />-->
+<!--    <result column="gender" jdbcType="TINYINT" property="gender" />-->
+<!--    <result column="birthday" jdbcType="TIMESTAMP" property="birthday" />-->
+<!--    <result column="motto" jdbcType="VARCHAR" property="motto" />-->
+<!--    <result column="avatar" jdbcType="VARCHAR" property="avatar" />-->
+<!--    <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />-->
+<!--    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />-->
+<!--    <result column="is_delete" jdbcType="TINYINT" property="isDelete" />-->
+<!--  </resultMap>-->
+<!--  <sql id="Base_Column_List">-->
+<!--    id, nickname, mobile, email, gender, birthday, motto, avatar, add_time, update_time, -->
+<!--    is_delete-->
+<!--  </sql>-->
+<!--  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">-->
+<!--    select -->
+<!--    <include refid="Base_Column_List" />-->
+<!--    from user-->
+<!--    where id = #{id,jdbcType=BIGINT}-->
+<!--  </select>-->
+<!--  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">-->
+<!--    delete from user-->
+<!--    where id = #{id,jdbcType=BIGINT}-->
+<!--  </delete>-->
+<!--  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.example.imserver.entity.UserDO" useGeneratedKeys="true">-->
+<!--    insert into user (nickname, mobile, email, -->
+<!--      gender, birthday, motto, -->
+<!--      avatar, add_time, update_time, -->
+<!--      is_delete)-->
+<!--    values (#{nickname,jdbcType=VARCHAR}, #{mobile,jdbcType=CHAR}, #{email,jdbcType=VARCHAR}, -->
+<!--      #{gender,jdbcType=TINYINT}, #{birthday,jdbcType=TIMESTAMP}, #{motto,jdbcType=VARCHAR}, -->
+<!--      #{avatar,jdbcType=VARCHAR}, #{addTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, -->
+<!--      #{isDelete,jdbcType=TINYINT})-->
+<!--  </insert>-->
+<!--  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.example.imserver.entity.UserDO" useGeneratedKeys="true">-->
+<!--    insert into user-->
+<!--    <trim prefix="(" suffix=")" suffixOverrides=",">-->
+<!--      <if test="nickname != null">-->
+<!--        nickname,-->
+<!--      </if>-->
+<!--      <if test="mobile != null">-->
+<!--        mobile,-->
+<!--      </if>-->
+<!--      <if test="email != null">-->
+<!--        email,-->
+<!--      </if>-->
+<!--      <if test="gender != null">-->
+<!--        gender,-->
+<!--      </if>-->
+<!--      <if test="birthday != null">-->
+<!--        birthday,-->
+<!--      </if>-->
+<!--      <if test="motto != null">-->
+<!--        motto,-->
+<!--      </if>-->
+<!--      <if test="avatar != null">-->
+<!--        avatar,-->
+<!--      </if>-->
+<!--      <if test="addTime != null">-->
+<!--        add_time,-->
+<!--      </if>-->
+<!--      <if test="updateTime != null">-->
+<!--        update_time,-->
+<!--      </if>-->
+<!--      <if test="isDelete != null">-->
+<!--        is_delete,-->
+<!--      </if>-->
+<!--    </trim>-->
+<!--    <trim prefix="values (" suffix=")" suffixOverrides=",">-->
+<!--      <if test="nickname != null">-->
+<!--        #{nickname,jdbcType=VARCHAR},-->
+<!--      </if>-->
+<!--      <if test="mobile != null">-->
+<!--        #{mobile,jdbcType=CHAR},-->
+<!--      </if>-->
+<!--      <if test="email != null">-->
+<!--        #{email,jdbcType=VARCHAR},-->
+<!--      </if>-->
+<!--      <if test="gender != null">-->
+<!--        #{gender,jdbcType=TINYINT},-->
+<!--      </if>-->
+<!--      <if test="birthday != null">-->
+<!--        #{birthday,jdbcType=TIMESTAMP},-->
+<!--      </if>-->
+<!--      <if test="motto != null">-->
+<!--        #{motto,jdbcType=VARCHAR},-->
+<!--      </if>-->
+<!--      <if test="avatar != null">-->
+<!--        #{avatar,jdbcType=VARCHAR},-->
+<!--      </if>-->
+<!--      <if test="addTime != null">-->
+<!--        #{addTime,jdbcType=TIMESTAMP},-->
+<!--      </if>-->
+<!--      <if test="updateTime != null">-->
+<!--        #{updateTime,jdbcType=TIMESTAMP},-->
+<!--      </if>-->
+<!--      <if test="isDelete != null">-->
+<!--        #{isDelete,jdbcType=TINYINT},-->
+<!--      </if>-->
+<!--    </trim>-->
+<!--  </insert>-->
+<!--  <update id="updateByPrimaryKeySelective" parameterType="com.example.imserver.entity.UserDO">-->
+<!--    update user-->
+<!--    <set>-->
+<!--      <if test="nickname != null">-->
+<!--        nickname = #{nickname,jdbcType=VARCHAR},-->
+<!--      </if>-->
+<!--      <if test="mobile != null">-->
+<!--        mobile = #{mobile,jdbcType=CHAR},-->
+<!--      </if>-->
+<!--      <if test="email != null">-->
+<!--        email = #{email,jdbcType=VARCHAR},-->
+<!--      </if>-->
+<!--      <if test="gender != null">-->
+<!--        gender = #{gender,jdbcType=TINYINT},-->
+<!--      </if>-->
+<!--      <if test="birthday != null">-->
+<!--        birthday = #{birthday,jdbcType=TIMESTAMP},-->
+<!--      </if>-->
+<!--      <if test="motto != null">-->
+<!--        motto = #{motto,jdbcType=VARCHAR},-->
+<!--      </if>-->
+<!--      <if test="avatar != null">-->
+<!--        avatar = #{avatar,jdbcType=VARCHAR},-->
+<!--      </if>-->
+<!--      <if test="addTime != null">-->
+<!--        add_time = #{addTime,jdbcType=TIMESTAMP},-->
+<!--      </if>-->
+<!--      <if test="updateTime != null">-->
+<!--        update_time = #{updateTime,jdbcType=TIMESTAMP},-->
+<!--      </if>-->
+<!--      <if test="isDelete != null">-->
+<!--        is_delete = #{isDelete,jdbcType=TINYINT},-->
+<!--      </if>-->
+<!--    </set>-->
+<!--    where id = #{id,jdbcType=BIGINT}-->
+<!--  </update>-->
+<!--  <update id="updateByPrimaryKey" parameterType="com.example.imserver.entity.UserDO">-->
+<!--    update user-->
+<!--    set nickname = #{nickname,jdbcType=VARCHAR},-->
+<!--      mobile = #{mobile,jdbcType=CHAR},-->
+<!--      email = #{email,jdbcType=VARCHAR},-->
+<!--      gender = #{gender,jdbcType=TINYINT},-->
+<!--      birthday = #{birthday,jdbcType=TIMESTAMP},-->
+<!--      motto = #{motto,jdbcType=VARCHAR},-->
+<!--      avatar = #{avatar,jdbcType=VARCHAR},-->
+<!--      add_time = #{addTime,jdbcType=TIMESTAMP},-->
+<!--      update_time = #{updateTime,jdbcType=TIMESTAMP},-->
+<!--      is_delete = #{isDelete,jdbcType=TINYINT}-->
+<!--    where id = #{id,jdbcType=BIGINT}-->
+<!--  </update>-->
+</mapper>
