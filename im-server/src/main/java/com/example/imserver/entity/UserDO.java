@@ -55,6 +55,8 @@ public class UserDO {
 
     private Date updateTime;
 
-    private Byte isDelete;
+    private Integer isDelete;
+
+    private String password;
 
 }

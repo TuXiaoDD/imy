@@ -19,4 +19,10 @@ public interface UserService {
 
     Integer register(String nickname, String password, String mobile);
 
+    public UserSettingVO getSetting() {
+        UserSettingVO vo = new UserSettingVO();
+        UserDO userDO = userDao.selectById(1);
+        vo.setUserInfo(UserConverter.userDO2UserInfoVO(userDO));
+        return vo;
+    }
 }

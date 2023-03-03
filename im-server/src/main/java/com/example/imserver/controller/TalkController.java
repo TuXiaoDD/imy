@@ -21,6 +21,7 @@ public class TalkController {
     @GetMapping("/list")
     public List<TalkListVO> list() {
         List<TalkListVO> list = new ArrayList<>();
+
         return list;
     }
 
@@ -32,6 +33,13 @@ public class TalkController {
     @PostMapping("/unread/clear")
     public List<TalkListVO> clear() {
         List<TalkListVO> list = new ArrayList<>();
+        return list;
+    }
+
+
+    @GetMapping("/records")
+    public List<TalkListVO> records() {
+        List<TalkListVO> list= new ArrayList<>();
         return list;
     }
 }
