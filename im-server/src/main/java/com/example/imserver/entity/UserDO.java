@@ -1,8 +1,11 @@
 package com.example.imserver.entity;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
@@ -14,6 +17,7 @@ import lombok.Data;
 @Data
 @TableName("user")
 public class UserDO {
+    @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
     /**
@@ -34,12 +38,12 @@ public class UserDO {
     /**
      * 性别
      */
-    private Byte gender;
+    private Integer gender;
 
     /**
      * 生日
      */
-    private Date birthday;
+    private LocalDateTime birthday;
 
     /**
      * 个性签名
@@ -51,9 +55,9 @@ public class UserDO {
      */
     private String avatar;
 
-    private Date addTime;
+    private LocalDateTime addTime;
 
-    private Date updateTime;
+    private LocalDateTime updateTime;
 
     private Integer isDelete;
 

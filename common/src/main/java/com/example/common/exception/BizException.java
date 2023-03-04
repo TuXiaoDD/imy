@@ -20,6 +20,10 @@ public class BizException extends BaseException {
         super(errCode, errMessage);
     }
 
+    public BizException(ResultCode errCode) {
+        super(errCode, errCode.getMessage());
+    }
+
     public BizException(String errMessage, Throwable e) {
         super(errMessage, e);
     }

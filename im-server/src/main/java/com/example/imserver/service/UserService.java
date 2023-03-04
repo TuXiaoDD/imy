@@ -1,6 +1,9 @@
 package com.example.imserver.service;
 
+import javax.servlet.http.HttpServletResponse;
+import com.example.imserver.controller.dto.LoginDTO;
 import com.example.imserver.controller.dto.RegisterDTO;
+import com.example.imserver.controller.vo.LoginVO;
 import com.example.imserver.controller.vo.UserSettingVO;
 import com.example.imserver.entity.UserDO;
 
@@ -16,9 +19,9 @@ import java.util.List;
 public interface UserService {
     List<UserDO> query();
 
-    RegisterDTO selectUser(String mobile);
+    LoginVO login(LoginDTO dto, HttpServletResponse response);
 
-    Long register(String nickName, String password, String mobile);
+    Long register(RegisterDTO dto);
 
     UserSettingVO getSetting();
 }

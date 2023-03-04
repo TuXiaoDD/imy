@@ -13,3 +13,5 @@ spring:
     username: root
     password: Apache001
     type: com.alibaba.druid.pool.DruidDataSource
+  cache:
+    type: caffeine
