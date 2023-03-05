@@ -1,11 +1,13 @@
 package com.example.imserver.service.query;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Data
 public class UserQuery {
     private Long id;

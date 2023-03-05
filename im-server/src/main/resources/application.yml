@@ -14,4 +14,6 @@ spring:
     password: Apache001
     type: com.alibaba.druid.pool.DruidDataSource
   cache:
-    type: caffeine
+    caffeine:
+      spec: maximumSize=500,expireAfterAccess=3s
+

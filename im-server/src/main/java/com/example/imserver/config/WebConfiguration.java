@@ -1,6 +1,6 @@
 package com.example.imserver.config;
 
-import com.example.imserver.interceptor.RequestInterceptor;
+import com.example.imserver.interceptor.UserPermissionInterceptor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
 import org.springframework.context.annotation.Bean;
@@ -12,7 +12,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @RequiredArgsConstructor
 public class WebConfiguration implements WebMvcConfigurer {
 
-    private final RequestInterceptor requestInterceptor;
+    private final UserPermissionInterceptor userPermissionInterceptor;
 
     @Bean
     public HttpMessageConverters httpMessageConverters() {
@@ -21,6 +21,6 @@ public class WebConfiguration implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(requestInterceptor);
+        registry.addInterceptor(userPermissionInterceptor);
     }
 }

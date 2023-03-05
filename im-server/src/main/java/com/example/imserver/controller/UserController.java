@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * 修改用户相关信息记得要让缓存失效
+ */
 @RestController
 @RequestMapping("/api/v1/users")
 @Slf4j
@@ -24,8 +27,8 @@ public class UserController {
      * @return
      */
     @GetMapping("/setting")
-    public UserSettingVO setting() {
-        return userService.getSetting();
+    public UserSettingVO setting(Long uid) {
+        return userService.getSetting(uid);
     }
 
     /**
