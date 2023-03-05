@@ -16,4 +16,20 @@ create table imy.user
 )
     comment '用户表';
 
+-- 暂定
+create table imy.friend
+(
+    id            bigint auto_increment
+        primary key,
+    add_time      timestamp default CURRENT_TIMESTAMP null,
+    update_time   timestamp                           null,
+    is_delete     int       default 0                 null,
+    friend_uid    bigint                              not null,
+    uid           bigint                              not null,
+    remark        varchar(256)                        null comment '好友备注',
+    relation_type int                                 null comment '好友类型',
+    status        int                                 null comment '状态'
+)
+    comment '好友表';
+
 
