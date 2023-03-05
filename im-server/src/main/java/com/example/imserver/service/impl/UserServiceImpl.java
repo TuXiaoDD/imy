@@ -44,16 +44,6 @@ public class UserServiceImpl implements UserService {
         UserDO userDO = userDOS.get(0);
         Assert.isTrue(Objects.equals(password, userDO.getPassword()), "密码不正确!");
         String token = getToken(userDO);
-//        // 退出登录需求清除缓存
-//        Cache<Long, String> cache = Caffeine.newBuilder().build();
-//        cache.put(userDO.getId(), password);
-//        UserCache cache = new UserCache();
-//        cache.setId(userDO.getId());
-//        cache.setPassword(password);
-//        RequestThreadUtils.setUserCache(cache);
-//        Cookie cookie  =new Cookie("token",token);
-//        cookie.setPath("/");
-//        response.addCookie(cookie);
         LoginVO vo = new LoginVO();
         vo.setAccessToken(token);
         vo.setExpiresIn(Constant.TOKEN_EXPIRE);
@@ -68,11 +58,6 @@ public class UserServiceImpl implements UserService {
         if (DataUtils.isNotEmpty(userDO)) {
             Assert.isFalse(Objects.equals(userDO.getMobile(), mobile), "该手机号已被注册!");
             Assert.isFalse(Objects.equals(userDO.getNickname(), nickname), "该昵称已被注册!");
-        }
-        try {// 尝试生成一个默认头像，生成失败不影响主流程
-            // todo 2023-03-04 18:43:54
-        } catch (Exception e) {
-
         }
         //密码加密
         UserDO user = new UserDO();

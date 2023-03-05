@@ -40,17 +40,9 @@ public class AuthController {
      * @return
      */
     @PostMapping("/register")
+    @NotRequireLogin
     public Long register(@RequestBody @Valid RegisterDTO dto) {
         return userService.register(dto);
-    }
-
-    @GetMapping("test")
-    public SettingVO test() {
-        SettingVO settingVO = new SettingVO();
-        settingVO.setThemeBagImg("test4");
-        settingVO.setNotifyCueTone("test2");
-        settingVO.setThemeMode("test1");
-        return settingVO;
     }
 
 

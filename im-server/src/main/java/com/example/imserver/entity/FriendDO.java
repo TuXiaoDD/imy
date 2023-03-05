@@ -26,7 +26,7 @@ public class FriendDO {
     /**
      * 家人，朋友
      */
-    private Integer relation_type;
+    private Integer relationType;
     /**
      * 单向好友 双向好友
      */

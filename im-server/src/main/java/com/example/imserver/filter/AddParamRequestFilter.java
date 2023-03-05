@@ -33,8 +33,7 @@ public class AddParamRequestFilter extends RequestFilter {
             try {
                 Map<String, String[]> parameterMap = request.getParameterMap();
                 Map<String, String[]> newParams = new HashMap<>(parameterMap);
-                String[] uids = new String[1];
-                newParams.put("uid", uids);
+                newParams.put("uid", new String[1]);
                 HttpServletRequest httpServletRequest = (HttpServletRequest) request;
                 ParameterRequestWrapper wrapper = new ParameterRequestWrapper(httpServletRequest, newParams);
                 chain.doFilter(wrapper, response);
