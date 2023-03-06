@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.imserver.dao.mapper.GroupMessageMapper">
+  <resultMap id="BaseResultMap" type="com.example.imserver.entity.GroupMessageDO">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="is_delete" jdbcType="INTEGER" property="isDelete" />
+    <result column="group_id" jdbcType="BIGINT" property="groupId" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="msg_hash" jdbcType="VARCHAR" property="msgHash" />
+    <result column="msg_type" jdbcType="INTEGER" property="msgType" />
+    <result column="src_uid" jdbcType="BIGINT" property="srcUid" />
+    <result column="dst_uid" jdbcType="BIGINT" property="dstUid" />
+    <result column="direction" jdbcType="INTEGER" property="direction" />
+    <result column="unread" jdbcType="INTEGER" property="unread" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, add_time, update_time, is_delete, group_id, content, msg_hash, msg_type, src_uid, 
+    dst_uid, direction, unread
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from group_message
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from group_message
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.example.imserver.entity.GroupMessageDO" useGeneratedKeys="true">
+    insert into group_message (add_time, update_time, is_delete, 
+      group_id, content, msg_hash, 
+      msg_type, src_uid, dst_uid, 
+      direction, unread)
+    values (#{addTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{isDelete,jdbcType=INTEGER}, 
+      #{groupId,jdbcType=BIGINT}, #{content,jdbcType=VARCHAR}, #{msgHash,jdbcType=VARCHAR}, 
+      #{msgType,jdbcType=INTEGER}, #{srcUid,jdbcType=BIGINT}, #{dstUid,jdbcType=BIGINT}, 
+      #{direction,jdbcType=INTEGER}, #{unread,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.example.imserver.entity.GroupMessageDO" useGeneratedKeys="true">
+    insert into group_message
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="addTime != null">
+        add_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="isDelete != null">
+        is_delete,
+      </if>
+      <if test="groupId != null">
+        group_id,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="msgHash != null">
+        msg_hash,
+      </if>
+      <if test="msgType != null">
+        msg_type,
+      </if>
+      <if test="srcUid != null">
+        src_uid,
+      </if>
+      <if test="dstUid != null">
+        dst_uid,
+      </if>
+      <if test="direction != null">
+        direction,
+      </if>
+      <if test="unread != null">
+        unread,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="addTime != null">
+        #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDelete != null">
+        #{isDelete,jdbcType=INTEGER},
+      </if>
+      <if test="groupId != null">
+        #{groupId,jdbcType=BIGINT},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="msgHash != null">
+        #{msgHash,jdbcType=VARCHAR},
+      </if>
+      <if test="msgType != null">
+        #{msgType,jdbcType=INTEGER},
+      </if>
+      <if test="srcUid != null">
+        #{srcUid,jdbcType=BIGINT},
+      </if>
+      <if test="dstUid != null">
+        #{dstUid,jdbcType=BIGINT},
+      </if>
+      <if test="direction != null">
+        #{direction,jdbcType=INTEGER},
+      </if>
+      <if test="unread != null">
+        #{unread,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.imserver.entity.GroupMessageDO">
+    update group_message
+    <set>
+      <if test="addTime != null">
+        add_time = #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDelete != null">
+        is_delete = #{isDelete,jdbcType=INTEGER},
+      </if>
+      <if test="groupId != null">
+        group_id = #{groupId,jdbcType=BIGINT},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="msgHash != null">
+        msg_hash = #{msgHash,jdbcType=VARCHAR},
+      </if>
+      <if test="msgType != null">
+        msg_type = #{msgType,jdbcType=INTEGER},
+      </if>
+      <if test="srcUid != null">
+        src_uid = #{srcUid,jdbcType=BIGINT},
+      </if>
+      <if test="dstUid != null">
+        dst_uid = #{dstUid,jdbcType=BIGINT},
+      </if>
+      <if test="direction != null">
+        direction = #{direction,jdbcType=INTEGER},
+      </if>
+      <if test="unread != null">
+        unread = #{unread,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.imserver.entity.GroupMessageDO">
+    update group_message
+    set add_time = #{addTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      is_delete = #{isDelete,jdbcType=INTEGER},
+      group_id = #{groupId,jdbcType=BIGINT},
+      content = #{content,jdbcType=VARCHAR},
+      msg_hash = #{msgHash,jdbcType=VARCHAR},
+      msg_type = #{msgType,jdbcType=INTEGER},
+      src_uid = #{srcUid,jdbcType=BIGINT},
+      dst_uid = #{dstUid,jdbcType=BIGINT},
+      direction = #{direction,jdbcType=INTEGER},
+      unread = #{unread,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

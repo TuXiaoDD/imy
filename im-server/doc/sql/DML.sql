@@ -33,4 +33,71 @@ create table imy.friend
 )
     comment '好友表';
 
+create table imy.`group`
+(
+    id          bigint auto_increment
+        primary key,
+    add_time    timestamp default CURRENT_TIMESTAMP null,
+    update_time timestamp                           null,
+    is_delete   int       default 0                 null,
+    group_name  varchar(256)                        not null comment '群名称',
+    announce    text                                null comment '群公告',
+    master_uid  bigint                              null comment '群主',
+    introduce   text                                null comment '群简介',
+    avatar      varchar(512)                        null comment '群头像'
+)
+    comment '群';
+
+create table imy.group_member
+(
+    id           bigint auto_increment
+        primary key,
+    group_id     bigint                              not null,
+    uid          bigint                              not null,
+    group_remark varchar(256)                        null comment '群备注',
+    add_time     timestamp default CURRENT_TIMESTAMP null,
+    update_time  timestamp                           null,
+    is_delete    int       default 0                 null,
+    constraint group_member_group_id_uindex
+        unique (group_id)
+)
+    comment '群成员';
+
+create table imy.group_message
+(
+    id          bigint auto_increment
+        primary key,
+    add_time    timestamp default CURRENT_TIMESTAMP null,
+    update_time timestamp                           null,
+    is_delete   int       default 0                 null,
+    group_id    bigint                              not null,
+    content     text                                not null comment '消息内容',
+    msg_hash    varchar(256)                        not null comment '消息唯一标识',
+    msg_type    int       default 0                 not null comment '消息类型',
+    src_uid     bigint                              not null comment '发消息的',
+    dst_uid     bigint                              not null comment '收消息的',
+    direction   int       default 0                 null comment '0 src发给dst
+1 dst发给src',
+    unread      int       default 0                 null comment '0 未读；1 已读'
+)
+    comment '群聊消息表';
+
+create table imy.single_message
+(
+    id          bigint auto_increment
+        primary key,
+    add_time    timestamp default CURRENT_TIMESTAMP null,
+    update_time timestamp                           null,
+    is_delete   int       default 0                 null,
+    uid         bigint                              not null comment '发送方uid',
+    to_uid      bigint                              not null comment '接受方uid',
+    msg_type    varchar(256)                        not null comment '消息类型',
+    content     text                                not null comment '消息内容',
+    direction   int       default 0                 null comment '0 表示uid发给to_uid
+1 表示to_uid发给uid',
+    unread      int       default 0                 null comment '0 未读；1 已读',
+    msg_hash    varchar(256)                        not null
+)
+    comment '消息表';
+
 

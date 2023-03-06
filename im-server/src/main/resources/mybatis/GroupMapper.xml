@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.imserver.dao.mapper.GroupMapper">
+<!--  <resultMap id="BaseResultMap" type="com.example.imserver.entity.GroupDO">-->
+<!--    <id column="id" jdbcType="BIGINT" property="id" />-->
+<!--    <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />-->
+<!--    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />-->
+<!--    <result column="is_delete" jdbcType="INTEGER" property="isDelete" />-->
+<!--    <result column="group_name" jdbcType="VARCHAR" property="groupName" />-->
+<!--    <result column="announce" jdbcType="VARCHAR" property="announce" />-->
+<!--    <result column="master_uid" jdbcType="BIGINT" property="masterUid" />-->
+<!--    <result column="introduce" jdbcType="VARCHAR" property="introduce" />-->
+<!--    <result column="avatar" jdbcType="VARCHAR" property="avatar" />-->
+<!--  </resultMap>-->
+<!--  <sql id="Base_Column_List">-->
+<!--    id, add_time, update_time, is_delete, group_name, announce, master_uid, introduce, -->
+<!--    avatar-->
+<!--  </sql>-->
+<!--  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">-->
+<!--    select -->
+<!--    <include refid="Base_Column_List" />-->
+<!--    from group-->
+<!--    where id = #{id,jdbcType=BIGINT}-->
+<!--  </select>-->
+<!--  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">-->
+<!--    delete from group-->
+<!--    where id = #{id,jdbcType=BIGINT}-->
+<!--  </delete>-->
+<!--  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.example.imserver.entity.GroupDO" useGeneratedKeys="true">-->
+<!--    insert into group (add_time, update_time, is_delete, -->
+<!--      group_name, announce, master_uid, -->
+<!--      introduce, avatar)-->
+<!--    values (#{addTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{isDelete,jdbcType=INTEGER}, -->
+<!--      #{groupName,jdbcType=VARCHAR}, #{announce,jdbcType=VARCHAR}, #{masterUid,jdbcType=BIGINT}, -->
+<!--      #{introduce,jdbcType=VARCHAR}, #{avatar,jdbcType=VARCHAR})-->
+<!--  </insert>-->
+<!--  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.example.imserver.entity.GroupDO" useGeneratedKeys="true">-->
+<!--    insert into group-->
+<!--    <trim prefix="(" suffix=")" suffixOverrides=",">-->
+<!--      <if test="addTime != null">-->
+<!--        add_time,-->
+<!--      </if>-->
+<!--      <if test="updateTime != null">-->
+<!--        update_time,-->
+<!--      </if>-->
+<!--      <if test="isDelete != null">-->
+<!--        is_delete,-->
+<!--      </if>-->
+<!--      <if test="groupName != null">-->
+<!--        group_name,-->
+<!--      </if>-->
+<!--      <if test="announce != null">-->
+<!--        announce,-->
+<!--      </if>-->
+<!--      <if test="masterUid != null">-->
+<!--        master_uid,-->
+<!--      </if>-->
+<!--      <if test="introduce != null">-->
+<!--        introduce,-->
+<!--      </if>-->
+<!--      <if test="avatar != null">-->
+<!--        avatar,-->
+<!--      </if>-->
+<!--    </trim>-->
+<!--    <trim prefix="values (" suffix=")" suffixOverrides=",">-->
+<!--      <if test="addTime != null">-->
+<!--        #{addTime,jdbcType=TIMESTAMP},-->
+<!--      </if>-->
+<!--      <if test="updateTime != null">-->
+<!--        #{updateTime,jdbcType=TIMESTAMP},-->
+<!--      </if>-->
+<!--      <if test="isDelete != null">-->
+<!--        #{isDelete,jdbcType=INTEGER},-->
+<!--      </if>-->
+<!--      <if test="groupName != null">-->
+<!--        #{groupName,jdbcType=VARCHAR},-->
+<!--      </if>-->
+<!--      <if test="announce != null">-->
+<!--        #{announce,jdbcType=VARCHAR},-->
+<!--      </if>-->
+<!--      <if test="masterUid != null">-->
+<!--        #{masterUid,jdbcType=BIGINT},-->
+<!--      </if>-->
+<!--      <if test="introduce != null">-->
+<!--        #{introduce,jdbcType=VARCHAR},-->
+<!--      </if>-->
+<!--      <if test="avatar != null">-->
+<!--        #{avatar,jdbcType=VARCHAR},-->
+<!--      </if>-->
+<!--    </trim>-->
+<!--  </insert>-->
+<!--  <update id="updateByPrimaryKeySelective" parameterType="com.example.imserver.entity.GroupDO">-->
+<!--    update group-->
+<!--    <set>-->
+<!--      <if test="addTime != null">-->
+<!--        add_time = #{addTime,jdbcType=TIMESTAMP},-->
+<!--      </if>-->
+<!--      <if test="updateTime != null">-->
+<!--        update_time = #{updateTime,jdbcType=TIMESTAMP},-->
+<!--      </if>-->
+<!--      <if test="isDelete != null">-->
+<!--        is_delete = #{isDelete,jdbcType=INTEGER},-->
+<!--      </if>-->
+<!--      <if test="groupName != null">-->
+<!--        group_name = #{groupName,jdbcType=VARCHAR},-->
+<!--      </if>-->
+<!--      <if test="announce != null">-->
+<!--        announce = #{announce,jdbcType=VARCHAR},-->
+<!--      </if>-->
+<!--      <if test="masterUid != null">-->
+<!--        master_uid = #{masterUid,jdbcType=BIGINT},-->
+<!--      </if>-->
+<!--      <if test="introduce != null">-->
+<!--        introduce = #{introduce,jdbcType=VARCHAR},-->
+<!--      </if>-->
+<!--      <if test="avatar != null">-->
+<!--        avatar = #{avatar,jdbcType=VARCHAR},-->
+<!--      </if>-->
+<!--    </set>-->
+<!--    where id = #{id,jdbcType=BIGINT}-->
+<!--  </update>-->
+<!--  <update id="updateByPrimaryKey" parameterType="com.example.imserver.entity.GroupDO">-->
+<!--    update group-->
+<!--    set add_time = #{addTime,jdbcType=TIMESTAMP},-->
+<!--      update_time = #{updateTime,jdbcType=TIMESTAMP},-->
+<!--      is_delete = #{isDelete,jdbcType=INTEGER},-->
+<!--      group_name = #{groupName,jdbcType=VARCHAR},-->
+<!--      announce = #{announce,jdbcType=VARCHAR},-->
+<!--      master_uid = #{masterUid,jdbcType=BIGINT},-->
+<!--      introduce = #{introduce,jdbcType=VARCHAR},-->
+<!--      avatar = #{avatar,jdbcType=VARCHAR}-->
+<!--    where id = #{id,jdbcType=BIGINT}-->
+<!--  </update>-->
+</mapper>

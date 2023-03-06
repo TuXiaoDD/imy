@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.imserver.dao.mapper.SingleMessageMapper">
+  <resultMap id="BaseResultMap" type="com.example.imserver.entity.SingleMessageDO">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="is_delete" jdbcType="INTEGER" property="isDelete" />
+    <result column="uid" jdbcType="BIGINT" property="uid" />
+    <result column="to_uid" jdbcType="BIGINT" property="toUid" />
+    <result column="msg_type" jdbcType="VARCHAR" property="msgType" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="direction" jdbcType="INTEGER" property="direction" />
+    <result column="unread" jdbcType="INTEGER" property="unread" />
+    <result column="msg_hash" jdbcType="VARCHAR" property="msgHash" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, add_time, update_time, is_delete, `uid`, to_uid, msg_type, content, direction, 
+    unread, msg_hash
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from single_message
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from single_message
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.example.imserver.entity.SingleMessageDO" useGeneratedKeys="true">
+    insert into single_message (add_time, update_time, is_delete, 
+      `uid`, to_uid, msg_type, 
+      content, direction, unread, 
+      msg_hash)
+    values (#{addTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{isDelete,jdbcType=INTEGER}, 
+      #{uid,jdbcType=BIGINT}, #{toUid,jdbcType=BIGINT}, #{msgType,jdbcType=VARCHAR}, 
+      #{content,jdbcType=VARCHAR}, #{direction,jdbcType=INTEGER}, #{unread,jdbcType=INTEGER}, 
+      #{msgHash,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.example.imserver.entity.SingleMessageDO" useGeneratedKeys="true">
+    insert into single_message
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="addTime != null">
+        add_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="isDelete != null">
+        is_delete,
+      </if>
+      <if test="uid != null">
+        `uid`,
+      </if>
+      <if test="toUid != null">
+        to_uid,
+      </if>
+      <if test="msgType != null">
+        msg_type,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="direction != null">
+        direction,
+      </if>
+      <if test="unread != null">
+        unread,
+      </if>
+      <if test="msgHash != null">
+        msg_hash,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="addTime != null">
+        #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDelete != null">
+        #{isDelete,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null">
+        #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="toUid != null">
+        #{toUid,jdbcType=BIGINT},
+      </if>
+      <if test="msgType != null">
+        #{msgType,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="direction != null">
+        #{direction,jdbcType=INTEGER},
+      </if>
+      <if test="unread != null">
+        #{unread,jdbcType=INTEGER},
+      </if>
+      <if test="msgHash != null">
+        #{msgHash,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.imserver.entity.SingleMessageDO">
+    update single_message
+    <set>
+      <if test="addTime != null">
+        add_time = #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDelete != null">
+        is_delete = #{isDelete,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null">
+        `uid` = #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="toUid != null">
+        to_uid = #{toUid,jdbcType=BIGINT},
+      </if>
+      <if test="msgType != null">
+        msg_type = #{msgType,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="direction != null">
+        direction = #{direction,jdbcType=INTEGER},
+      </if>
+      <if test="unread != null">
+        unread = #{unread,jdbcType=INTEGER},
+      </if>
+      <if test="msgHash != null">
+        msg_hash = #{msgHash,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.imserver.entity.SingleMessageDO">
+    update single_message
+    set add_time = #{addTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      is_delete = #{isDelete,jdbcType=INTEGER},
+      `uid` = #{uid,jdbcType=BIGINT},
+      to_uid = #{toUid,jdbcType=BIGINT},
+      msg_type = #{msgType,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      direction = #{direction,jdbcType=INTEGER},
+      unread = #{unread,jdbcType=INTEGER},
+      msg_hash = #{msgHash,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
