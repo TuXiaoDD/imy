@@ -3,6 +3,7 @@ package com.example.imserver.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.example.imserver.enums.RelationTypeEnum;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -22,13 +23,27 @@ public class FriendDO {
     private Long friendUid;
 
     private Long uid;
+    /**
+     * 好友备注
+     */
     private String remark;
     /**
      * 家人，朋友
+     *
+     * @see RelationTypeEnum
      */
     private Integer relationType;
     /**
-     * 单向好友 双向好友
+     * 最近的一条消息
      */
-    private Integer status;
+    private String latestMsg;
+    /**
+     * 0 表示uid给friend_uid发
+     * 1 表示friend_uid给uid发
+     */
+    private Integer direction;
+    /**
+     * 消息已读未读
+     */
+    private Integer unread;
 }

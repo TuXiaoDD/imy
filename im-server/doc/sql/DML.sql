@@ -16,7 +16,6 @@ create table imy.user
 )
     comment '用户表';
 
--- 暂定
 create table imy.friend
 (
     id            bigint auto_increment
@@ -28,7 +27,9 @@ create table imy.friend
     uid           bigint                              not null,
     remark        varchar(256)                        null comment '好友备注',
     relation_type int                                 null comment '好友类型',
-    status        int                                 null comment '状态'
+    latest_msg    text                                null comment '最新的一条消息',
+    direction     int       default 0                 null comment '0 表示uid给friend_uid发 1 表示friend_uid给uid发',
+    unread        int       default 0                 null comment '0 未读；1 已读'
 )
     comment '好友表';
 
