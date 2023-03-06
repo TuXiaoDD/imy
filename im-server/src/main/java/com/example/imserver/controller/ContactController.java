@@ -1,12 +1,14 @@
 package com.example.imserver.controller;
 
 import com.example.common.page.PageQuery;
+import com.example.imserver.annotation.NotRequireLogin;
 import com.example.imserver.controller.vo.*;
+import com.example.imserver.entity.ContactDO;
 import com.example.imserver.service.ContactService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.constraints.NotNull;
@@ -37,7 +39,7 @@ public class ContactController {
      * @date: 2023/2/28  ~  23:12
      * @params: []
      * @return: java.util.List<com.example.imserver.controller.vo.GroupVo>
-     * @description: 通讯录群组列表
+     * @description: 获取通讯录群组列表
      */
     @GetMapping("/group/list")
     public List<GroupVo> groupList() {
@@ -45,10 +47,23 @@ public class ContactController {
         return groupList;
     }
 
+    /**
+      * @params: []
+      * @return: java.util.List<com.example.imserver.controller.vo.ContactListVO>
+      * @description:  获取通讯录好友列表
+      */
     @GetMapping("/list")
-    public List<ContactListVO> contactList() {
-        List<ContactListVO> contactListVOS = new ArrayList();
+    @NotRequireLogin
+    public List<ContactDO> contactList() {
+        List<ContactDO> contactListVOS = contactService.queryContactList();
         return contactListVOS;
+    }
+
+    @PostMapping("/add")
+    @NotRequireLogin
+    public Long addContact() {
+
+        return 1L;
     }
 
     @GetMapping("/detail")

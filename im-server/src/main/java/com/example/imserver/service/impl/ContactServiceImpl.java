@@ -1,9 +1,12 @@
 package com.example.imserver.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.common.page.PageQuery;
 import com.example.common.utils.Assert;
 import com.example.imserver.controller.vo.ContactDetailVO;
 import com.example.imserver.controller.vo.FriendApplyRecordVO;
+import com.example.imserver.dao.mapper.ContactMapper;
+import com.example.imserver.entity.ContactDO;
 import com.example.imserver.entity.FriendDO;
 import com.example.imserver.entity.UserDO;
 import com.example.imserver.service.ContactService;
@@ -15,7 +18,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -26,6 +28,9 @@ public class ContactServiceImpl implements ContactService {
     UserService userService;
     @Autowired
     FriendService friendService;
+
+    @Autowired
+    ContactMapper contactMapper;
 
 
     @Override
@@ -44,5 +49,18 @@ public class ContactServiceImpl implements ContactService {
     public FriendApplyRecordVO applyRecords(Long uid, PageQuery pageQuery) {
         FriendApplyRecordVO vo = new FriendApplyRecordVO();
         return vo;
+    }
+
+    /**
+     * @params: []
+     * @return: java.util.List<com.example.imserver.controller.vo.ContactListVO>
+     * @description: 查询通讯录好友列表
+     */
+    @Override
+    public List<ContactDO> queryContactList() {
+        QueryWrapper<ContactDO> wrapper = new QueryWrapper<>();
+        List<ContactDO> contactList = contactMapper.selectList(wrapper);
+        log.info("获取好友列表结果：<{}>", contactList);
+        return contactList;
     }
 }

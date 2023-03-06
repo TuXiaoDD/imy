@@ -17,6 +17,7 @@ create table imy.user
 )
     comment '用户表';
 
+drop table if exists imy.friend;
 create table imy.friend
 (
     id            bigint auto_increment

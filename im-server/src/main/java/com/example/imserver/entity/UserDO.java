@@ -55,12 +55,24 @@ public class UserDO {
      */
     private String avatar;
 
+    /**
+     * 注册时间
+     */
     private LocalDateTime addTime;
 
+    /**
+     * 更新时间
+     */
     private LocalDateTime updateTime;
 
+    /**
+     * 是否删除
+     */
     private Integer isDelete;
 
+    /**
+     * 密码
+     */
     private String password;
 
 }
