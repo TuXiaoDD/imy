@@ -1,8 +1,7 @@
 package com.example.imserver.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
+import com.example.imserver.enums.FriendStatusEnum;
 import com.example.imserver.enums.RelationTypeEnum;
 import lombok.Data;
 
@@ -14,14 +13,26 @@ public class FriendDO {
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
+    /**
+     * 添加时间
+     */
+    @TableField(fill = FieldFill.INSERT)
     private LocalDateTime addTime;
 
+    /**
+     * 更新时间
+     */
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
 
-    private Integer isDelete;
-
+    /**
+     * 好友uid
+     */
     private Long friendUid;
 
+    /**
+     * uid
+     */
     private Long uid;
     /**
      * 好友备注
@@ -46,4 +57,9 @@ public class FriendDO {
      * 消息已读未读
      */
     private Integer unread;
+    /**
+     * 好友状态
+     * @see FriendStatusEnum
+     */
+    private Integer friendStatus;
 }

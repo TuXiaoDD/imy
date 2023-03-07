@@ -3,10 +3,9 @@ package com.example.imserver.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.common.page.PageQuery;
 import com.example.common.utils.Assert;
+import com.example.imserver.controller.dto.AddFriendDTO;
 import com.example.imserver.controller.vo.ContactDetailVO;
 import com.example.imserver.controller.vo.FriendApplyRecordVO;
-import com.example.imserver.dao.mapper.ContactMapper;
-import com.example.imserver.entity.ContactDO;
 import com.example.imserver.entity.FriendDO;
 import com.example.imserver.entity.UserDO;
 import com.example.imserver.service.ContactService;
@@ -29,8 +28,7 @@ public class ContactServiceImpl implements ContactService {
     @Autowired
     FriendService friendService;
 
-    @Autowired
-    ContactMapper contactMapper;
+
 
 
     @Override
@@ -56,11 +54,18 @@ public class ContactServiceImpl implements ContactService {
      * @return: java.util.List<com.example.imserver.controller.vo.ContactListVO>
      * @description: 查询通讯录好友列表
      */
+//    @Override
+//    public List<FriendDO> queryContactList() {
+//        QueryWrapper<ContactDO> wrapper = new QueryWrapper<>();
+//        List<ContactDO> contactList = contactMapper.selectList(wrapper);
+//        log.info("获取好友列表结果：<{}>", contactList);
+//        return contactList;
+//    }
+//
     @Override
-    public List<ContactDO> queryContactList() {
-        QueryWrapper<ContactDO> wrapper = new QueryWrapper<>();
-        List<ContactDO> contactList = contactMapper.selectList(wrapper);
-        log.info("获取好友列表结果：<{}>", contactList);
-        return contactList;
+    public void applyCreate(AddFriendDTO dto, Long uid) {
+        FriendDO friendDO = friendService.queryByUid(uid,dto.getFriendId());
+
+
     }
 }

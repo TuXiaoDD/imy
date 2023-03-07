@@ -24,7 +24,7 @@ create table imy.friend
         primary key,
     add_time      timestamp default CURRENT_TIMESTAMP null,
     update_time   timestamp                           null,
-    is_delete     int       default 0                 null,
+    friend_status     int       default 0                 null comment '0正常好友 1已删除 2已加黑名单 ',
     friend_uid    bigint                              not null,
     uid           bigint                              not null,
     remark        varchar(256)                        null comment '好友备注',
