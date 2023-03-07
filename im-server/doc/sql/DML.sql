@@ -104,4 +104,15 @@ create table imy.single_message
 )
     comment '消息表';
 
-
+drop table if exists imy.friend_group;
+create table imy.friend_group
+(
+    id          bigint    auto_increment            primary key ,
+    name        varchar(128)                        not null comment '分组名称',
+    add_time    timestamp default CURRENT_TIMESTAMP null comment '创建时间',
+    update_time timestamp                           null comment '更新时间',
+    is_delete   int       default 0                 null comment '逻辑删除:0-未删除;1-已删除',
+    count    bigint       default 100               not null comment '容量:分组好友数量',
+    sort        int                                 null comment '分组排序:数字小的靠前'
+)
+    comment '好友通讯录分组信息表'
