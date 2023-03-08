@@ -1,10 +1,12 @@
-mybatis:
-  mapper-locations: classpath*:/mybatis/*.xml
-  configuration:
-    map-underscore-to-camel-case: true
+
+logging:
+  level:
+    com.app.mapper: debug
+
 mybatis-plus:
   configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true
+  mapper-locations: classpath*:/mybatis/*.xml
 
 spring:
   datasource:
