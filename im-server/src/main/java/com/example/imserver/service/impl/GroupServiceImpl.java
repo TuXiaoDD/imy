@@ -2,6 +2,7 @@ package com.example.imserver.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.example.common.utils.DataUtils;
+import com.example.imserver.controller.dto.group.GroupCreateDTO;
 import com.example.imserver.controller.dto.group.GroupListDTO;
 import com.example.imserver.controller.vo.group.GroupListVO;
 import com.example.imserver.dao.GroupDAO;
@@ -29,5 +30,10 @@ public class GroupServiceImpl implements GroupService {
                         .map(groupDO -> GroupConverter.groupDO2VO(groupDO, dto.getUid()))
                         .collect(Collectors.toList()))
                 .orElse(List.of());
+    }
+
+    @Override
+    public Long create(GroupCreateDTO dto,Long uid) {
+        return (long) groupDAO.getBaseMapper().insert(GroupConverter.groupCreateDTO2DO(dto,uid));
     }
 }

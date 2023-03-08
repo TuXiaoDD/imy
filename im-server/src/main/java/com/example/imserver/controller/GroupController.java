@@ -1,14 +1,12 @@
 package com.example.imserver.controller;
 
+import com.example.imserver.controller.dto.group.GroupCreateDTO;
 import com.example.imserver.controller.dto.group.GroupListDTO;
 import com.example.imserver.controller.vo.LoginVO;
 import com.example.imserver.controller.vo.group.GroupListVO;
 import com.example.imserver.service.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,8 +44,8 @@ public class GroupController {
      * @return
      */
     @PostMapping("/create")
-    public List<LoginVO> create() {
-        return new ArrayList<>();
+    public Long create(@RequestBody GroupCreateDTO dto,Long uid) {
+        return groupService.create(dto,uid);
     }
 
     /**
