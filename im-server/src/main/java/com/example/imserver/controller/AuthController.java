@@ -4,7 +4,6 @@ import com.example.imserver.annotation.NotRequireLogin;
 import com.example.imserver.controller.dto.LoginDTO;
 import com.example.imserver.controller.dto.RegisterDTO;
 import com.example.imserver.controller.vo.LoginVO;
-import com.example.imserver.controller.vo.SettingVO;
 import com.example.imserver.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

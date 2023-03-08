@@ -1,21 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.imserver.dao.mapper.GroupMapper">
-<!--  <resultMap id="BaseResultMap" type="com.example.imserver.entity.GroupDO">-->
-<!--    <id column="id" jdbcType="BIGINT" property="id" />-->
-<!--    <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />-->
-<!--    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />-->
-<!--    <result column="is_delete" jdbcType="INTEGER" property="isDelete" />-->
-<!--    <result column="group_name" jdbcType="VARCHAR" property="groupName" />-->
-<!--    <result column="announce" jdbcType="VARCHAR" property="announce" />-->
-<!--    <result column="master_uid" jdbcType="BIGINT" property="masterUid" />-->
-<!--    <result column="introduce" jdbcType="VARCHAR" property="introduce" />-->
-<!--    <result column="avatar" jdbcType="VARCHAR" property="avatar" />-->
-<!--  </resultMap>-->
-<!--  <sql id="Base_Column_List">-->
-<!--    id, add_time, update_time, is_delete, group_name, announce, master_uid, introduce, -->
-<!--    avatar-->
-<!--  </sql>-->
+
+  <sql id="Base_Column_List">
+      id, add_time, update_time, is_delete, group_name, announce, master_uid, introduce,avatar,is_disturb
+  </sql>
 <!--  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">-->
 <!--    select -->
 <!--    <include refid="Base_Column_List" />-->
@@ -37,9 +26,6 @@
 <!--  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.example.imserver.entity.GroupDO" useGeneratedKeys="true">-->
 <!--    insert into group-->
 <!--    <trim prefix="(" suffix=")" suffixOverrides=",">-->
-<!--      <if test="addTime != null">-->
-<!--        add_time,-->
-<!--      </if>-->
 <!--      <if test="updateTime != null">-->
 <!--        update_time,-->
 <!--      </if>-->
@@ -131,4 +117,22 @@
 <!--      avatar = #{avatar,jdbcType=VARCHAR}-->
 <!--    where id = #{id,jdbcType=BIGINT}-->
 <!--  </update>-->
+    <select id="groupList" resultType="com.example.imserver.entity.GroupDO">
+        select
+        <include refid="Base_Column_List"/>
+        from group as g
+        left join group_member as gm
+        on g.id = gm.group_id
+        where g.is_delete = 0 and gm.is_delete = 0
+        and gm.uid = #{dto.uid}
+        <if test="dto.isMaster != null and dto.isMaster == true">
+            and g.master_uid = #{dto.uid}
+        </if>
+        <if test="dto.isMaster != null and dto.isMaster == false">
+            and g.master_uid != #{dto.uid}
+        </if>
+        <if test="dto.isMaster != null">
+            and g.group_name = #{dto.groupName}
+        </if>
+    </select>
 </mapper>

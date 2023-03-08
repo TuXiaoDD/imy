@@ -4,6 +4,7 @@ import com.example.common.page.PageQuery;
 import com.example.imserver.annotation.NotRequireLogin;
 import com.example.imserver.controller.dto.AddFriendDTO;
 import com.example.imserver.controller.vo.*;
+import com.example.imserver.controller.vo.group.GroupVo;
 import com.example.imserver.service.ContactService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -39,7 +40,7 @@ public class ContactController {
      * @author: leMin
      * @date: 2023/2/28  ~  23:12
      * @params: []
-     * @return: java.util.List<com.example.imserver.controller.vo.GroupVo>
+     * @return: java.util.List<com.example.imserver.controller.vo.group.GroupVo>
      * @description: 获取通讯录群组列表
      */
     @GetMapping("/group/list")

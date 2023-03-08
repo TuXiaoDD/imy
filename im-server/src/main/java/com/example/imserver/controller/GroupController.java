@@ -1,6 +1,10 @@
 package com.example.imserver.controller;
 
+import com.example.imserver.controller.dto.group.GroupListDTO;
 import com.example.imserver.controller.vo.LoginVO;
+import com.example.imserver.controller.vo.group.GroupListVO;
+import com.example.imserver.service.GroupService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,14 +17,17 @@ import java.util.List;
 @RequestMapping("/api/v1/group")
 public class GroupController {
 
+    @Autowired
+    GroupService groupService;
+
     /**
      * 获取群列表
      *
      * @return
      */
     @GetMapping("/list")
-    public List<LoginVO> list() {
-        return new ArrayList<>();
+    public List<GroupListVO> list(GroupListDTO dto) {
+       return groupService.groupList(dto);
     }
 
     /**

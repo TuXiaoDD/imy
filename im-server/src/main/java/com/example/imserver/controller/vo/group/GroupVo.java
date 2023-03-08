@@ -1,4 +1,4 @@
-package com.example.imserver.controller.vo;
+package com.example.imserver.controller.vo.group;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;

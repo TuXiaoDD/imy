@@ -32,6 +32,7 @@ public class UserServiceImpl implements UserService {
 
     public List<UserDO> query() {
         LambdaQueryWrapper<UserDO> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(UserDO::getIsDelete,0);
         return userMapper.selectList(wrapper);
     }
 
@@ -52,14 +53,14 @@ public class UserServiceImpl implements UserService {
 
     public Long register(RegisterDTO dto) {
         String mobile = dto.getMobile();
-        String password = getEncryptPassword(dto.getPassword());
         String nickname = dto.getNickname();
         UserDO userDO = queryUserUsingOr(mobile, nickname);
-        if (DataUtils.isNotEmpty(userDO)) {
-            Assert.isFalse(Objects.equals(userDO.getMobile(), mobile), "该手机号已被注册!");
-            Assert.isFalse(Objects.equals(userDO.getNickname(), nickname), "该昵称已被注册!");
-        }
+        Optional.ofNullable(userDO).ifPresent(user -> {
+            Assert.isFalse(Objects.equals(user.getMobile(), mobile), "该手机号已被注册!");
+            Assert.isFalse(Objects.equals(user.getNickname(), nickname), "该昵称已被注册!");
+        });
         //密码加密
+        String password = getEncryptPassword(dto.getPassword());
         UserDO user = new UserDO();
         user.setMobile(mobile);
         user.setNickname(nickname);
