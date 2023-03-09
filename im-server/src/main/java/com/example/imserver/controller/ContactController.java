@@ -64,8 +64,8 @@ public class ContactController {
       */
     @GetMapping("/list")
     @NotRequireLogin
-    public ContactListVO contactList(@NotNull Long uid) {
-        ContactListVO contactList = contactService.queryContactList(uid);
+    public List<ContactVO> contactList(@NotNull Long uid) {
+        List<ContactVO> contactList = contactService.queryContactList(uid);
         log.info("好友列表信息结果:<{}>", contactList);
         return contactList;
     }

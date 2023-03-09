@@ -4,8 +4,10 @@ import com.example.common.page.PageQuery;
 import com.example.common.utils.Assert;
 import com.example.imserver.controller.dto.AddFriendDTO;
 import com.example.imserver.controller.vo.ContactDetailVO;
-import com.example.imserver.controller.vo.ContactListVO;
+import com.example.imserver.controller.vo.ContactVO;
 import com.example.imserver.controller.vo.FriendApplyRecordVO;
+import com.example.imserver.dao.mapper.ContactMapper;
+import com.example.imserver.dao.mapper.UserMapper;
 import com.example.imserver.entity.FriendDO;
 import com.example.imserver.entity.UserDO;
 import com.example.imserver.service.ContactService;
@@ -32,6 +34,9 @@ public class ContactServiceImpl implements ContactService {
     @Autowired
     ContactMapper contactMapper;
 
+    @Autowired
+    UserMapper userMapper;
+
 
     @Override
     public ContactDetailVO contactDetail(Long friendUid, Long uid) {
@@ -57,7 +62,7 @@ public class ContactServiceImpl implements ContactService {
      * @description: 根据该用户的id，查询其所有通讯录好友列表
      */
     @Override
-    public ContactListVO queryContactList(Long uid) {
+    public List<ContactVO> queryContactList(Long uid) {
         //查询该uid用户下的所有好友关联信息
         List<FriendDO> friendList = contactMapper.queryFriendRelationInfo(uid);
         //获取所有好友的uid
@@ -68,7 +73,7 @@ public class ContactServiceImpl implements ContactService {
         }
         log.info("获取好友id结果：<{}>", friendIdList);
         //查找所有好友信息
-        ContactListVO contactList = contactMapper.queryContactList(friendIdList);
+        List<ContactVO> contactList = contactMapper.queryContactList(friendIdList);
         log.info("获取好友列表结果：<{}>", contactList);
         return contactList;
     }
