@@ -5,7 +5,9 @@ import com.example.imserver.annotation.NotRequireLogin;
 import com.example.imserver.controller.dto.AddFriendDTO;
 import com.example.imserver.controller.vo.*;
 import com.example.imserver.controller.vo.group.GroupVo;
+import com.example.imserver.service.CacheService;
 import com.example.imserver.service.ContactService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,15 +16,20 @@ import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
  * 包含群聊 单聊
  */
+@Slf4j
 @RestController
 @RequestMapping("/api/v1/contact")
 public class ContactController {
 
     @Autowired
     ContactService contactService;
+
+    @Autowired
+    CacheService cacheService;
 
     /**
      * 未读消息数
@@ -44,6 +51,7 @@ public class ContactController {
      * @description: 获取通讯录群组列表
      */
     @GetMapping("/group/list")
+    @NotRequireLogin
     public List<GroupVo> groupList() {
         List<GroupVo> groupList = new ArrayList();
         return groupList;
@@ -52,21 +60,16 @@ public class ContactController {
     /**
       * @params: []
       * @return: java.util.List<com.example.imserver.controller.vo.ContactListVO>
-      * @description:  获取通讯录好友列表
+      * @description:  获取【登录用户】通讯录好友列表
       */
-//    @GetMapping("/list")
-//    @NotRequireLogin
-//    public List<ContactDO> contactList() {
-//        List<ContactDO> contactListVOS = contactService.queryContactList();
-//        return contactListVOS;
-//    }
-
-    @PostMapping("/add")
+    @GetMapping("/list")
     @NotRequireLogin
-    public Long addContact() {
-
-        return 1L;
+    public ContactListVO contactList(@NotNull Long uid) {
+        ContactListVO contactList = contactService.queryContactList(uid);
+        log.info("好友列表信息结果:<{}>", contactList);
+        return contactList;
     }
+
 
     @GetMapping("/detail")
     public ContactDetailVO contactDetail(@NotNull Long friendUid,Long uid) {
