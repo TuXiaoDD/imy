@@ -19,7 +19,7 @@ import java.util.List;
  * @description:
  */
 public interface UserService {
-    List<UserDO> query();
+    List<UserDO> query(List<Long> ids);
 
     LoginVO login(LoginDTO dto, HttpServletResponse response);
 
@@ -28,4 +28,6 @@ public interface UserService {
     UserSettingVO getSetting(Long uid);
 
     List<UserDO> queryUser(UserQuery query);
+
+    List<Long> getNotExistUid(List<Long> ids);
 }

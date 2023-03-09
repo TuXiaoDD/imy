@@ -10,10 +10,10 @@ public class ContactDetailVO {
 
     @JsonProperty("avatar")
     private String avatar;
-//    @JsonProperty("friend_apply")
-//    private Integer friendApply;
-//    @JsonProperty("friend_status")
-//    private Integer friendStatus;
+    @JsonProperty("friend_apply")
+    private Integer friendApply;
+    @JsonProperty("friend_status")
+    private Integer friendStatus;
     @JsonProperty("gender")
     private Integer gender;
     /**

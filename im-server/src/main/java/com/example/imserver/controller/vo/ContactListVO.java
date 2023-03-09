@@ -24,13 +24,13 @@ public class ContactListVO {
      * 好友所属群组id
      * */
     @JsonProperty("group_id")
-    private Integer groupId;
+    private Long groupId;
 
     /*
      * 好友id
      * */
     @JsonProperty("id")
-    private Integer id;
+    private Long id;
 
     /*
      * 好友是否在线

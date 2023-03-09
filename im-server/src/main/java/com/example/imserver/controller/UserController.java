@@ -92,7 +92,7 @@ public class UserController {
      */
     @GetMapping("/list")
     public List<UserDO> list() {
-        return userService.query();
+        return userService.query(null);
     }
 
 

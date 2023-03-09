@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.imserver.dao.mapper.GroupMapper">
-    <resultMap id="BaseResultMap" type="com.example.imserver.entity.GroupDO">
-        <id column="id" jdbcType="BIGINT" property="id" />
-        <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
-        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
-        <result column="is_delete" jdbcType="INTEGER" property="isDelete" />
-        <result column="group_name" jdbcType="VARCHAR" property="groupName" />
-        <result column="announce" jdbcType="VARCHAR" property="announce" />
-        <result column="master_uid" jdbcType="BIGINT" property="masterUid" />
-        <result column="introduce" jdbcType="VARCHAR" property="introduce" />
-        <result column="avatar" jdbcType="VARCHAR" property="avatar" />
-        <result column="is_disturb" jdbcType="INTEGER" property="isDisturb" />
-    </resultMap>
-  <sql id="Base_Column_List">
-      id, add_time, update_time, is_delete, group_name, announce, master_uid, introduce,avatar,is_disturb
-  </sql>
+<!--    <resultMap id="BaseResultMap" type="com.example.imserver.entity.GroupDO">-->
+<!--        <id column="id" jdbcType="BIGINT" property="id" />-->
+<!--        <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />-->
+<!--        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />-->
+<!--        <result column="is_delete" jdbcType="INTEGER" property="isDelete" />-->
+<!--        <result column="group_name" jdbcType="VARCHAR" property="groupName" />-->
+<!--        <result column="announce" jdbcType="VARCHAR" property="announce" />-->
+<!--        <result column="master_uid" jdbcType="BIGINT" property="masterUid" />-->
+<!--        <result column="introduce" jdbcType="VARCHAR" property="introduce" />-->
+<!--        <result column="avatar" jdbcType="VARCHAR" property="avatar" />-->
+<!--        <result column="is_disturb" jdbcType="INTEGER" property="isDisturb" />-->
+<!--    </resultMap>-->
+<!--  <sql id="Base_Column_List">-->
+<!--      id, add_time, update_time, is_delete, group_name, announce, master_uid, introduce,avatar,is_disturb-->
+<!--  </sql>-->
 
-    <select id="groupList" resultMap="BaseResultMap">
+    <select id="groupList" resultType="com.example.imserver.entity.FriendDO">
         select
         g.*
         from `group` as g
@@ -31,7 +31,7 @@
         <if test="dto.isMaster != null and dto.isMaster == false">
             and g.master_uid != #{dto.uid}
         </if>
-        <if test="dto.isMaster != null">
+        <if test="dto.groupName != null">
             and g.group_name = #{dto.groupName}
         </if>
     </select>

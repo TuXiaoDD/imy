@@ -3,6 +3,7 @@ package com.example.imserver.controller;
 import com.example.common.page.PageQuery;
 import com.example.imserver.annotation.NotRequireLogin;
 import com.example.imserver.controller.dto.AddFriendDTO;
+import com.example.imserver.controller.dto.ContactListDTO;
 import com.example.imserver.controller.vo.*;
 import com.example.imserver.controller.vo.group.GroupVo;
 import com.example.imserver.service.ContactService;
@@ -54,12 +55,10 @@ public class ContactController {
       * @return: java.util.List<com.example.imserver.controller.vo.ContactListVO>
       * @description:  获取通讯录好友列表
       */
-//    @GetMapping("/list")
-//    @NotRequireLogin
-//    public List<ContactDO> contactList() {
-//        List<ContactDO> contactListVOS = contactService.queryContactList();
-//        return contactListVOS;
-//    }
+    @GetMapping("/list")
+    public List<ContactListVO> contactList(ContactListDTO dto) {
+        return contactService.queryContactList(dto);
+    }
 
     @PostMapping("/add")
     @NotRequireLogin
@@ -69,13 +68,18 @@ public class ContactController {
     }
 
     @GetMapping("/detail")
-    public ContactDetailVO contactDetail(@NotNull Long friendUid,Long uid) {
-        return contactService.contactDetail(friendUid,uid);
+    public ContactDetailVO contactDetail(@NotNull Long user_id,Long uid) {
+        return contactService.contactDetail(user_id,uid);
     }
 
     @GetMapping("/apply/records")
     public FriendApplyRecordVO applyRecords(Long uid, PageQuery pageQuery) {
         return contactService.applyRecords(uid, pageQuery);
+    }
+
+    @GetMapping("/search")
+    public Long search(Long uid, @NotNull String mobile) {
+        return contactService.search(uid, mobile);
     }
 
     /**

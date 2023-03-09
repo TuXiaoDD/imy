@@ -24,4 +24,8 @@ public interface FriendService {
     FriendApplyRecordVO applyRecords(Long uid, PageQuery pageQuery);
 
     void applyCreate(AddFriendDTO dto, Long uid);
+
+    List<Long> getNotFriendUid(Long uid, List<Long> ids);
+
+    List<FriendDO> list(Long uid, List<Long> ids);
 }

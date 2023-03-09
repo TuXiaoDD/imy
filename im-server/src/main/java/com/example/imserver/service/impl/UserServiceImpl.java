@@ -10,6 +10,7 @@ import com.example.imserver.controller.dto.LoginDTO;
 import com.example.imserver.controller.dto.RegisterDTO;
 import com.example.imserver.controller.vo.LoginVO;
 import com.example.imserver.controller.vo.UserSettingVO;
+import com.example.imserver.dao.UserDao;
 import com.example.imserver.entity.UserDO;
 import com.example.imserver.dao.mapper.UserMapper;
 import com.example.imserver.service.UserService;
@@ -22,17 +23,21 @@ import org.springframework.util.DigestUtils;
 import javax.servlet.http.HttpServletResponse;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
 
     @Autowired
     UserMapper userMapper;
+    @Autowired
+    UserDao userDao;
 
 
-    public List<UserDO> query() {
+    public List<UserDO> query(List<Long> ids) {
         LambdaQueryWrapper<UserDO> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(UserDO::getIsDelete,0);
+        wrapper.eq(UserDO::getIsDelete, 0);
+        wrapper.in(DataUtils.isNotEmpty(ids), UserDO::getId, ids);
         return userMapper.selectList(wrapper);
     }
 
@@ -72,8 +77,8 @@ public class UserServiceImpl implements UserService {
 
     public UserSettingVO getSetting(Long uid) {
         UserSettingVO vo = new UserSettingVO();
-        UserDO userDO = userMapper.selectById(uid);
-        vo.setUserInfo(UserConverter.userDO2UserInfoVO(userDO));
+        UserDO userDO = userDao.queryUsers(List.of(uid)).get(0);
+        Optional.ofNullable(userDO).ifPresent(u -> vo.setUserInfo(UserConverter.userDO2UserInfoVO(userDO)));
         return vo;
     }
 
@@ -85,6 +90,19 @@ public class UserServiceImpl implements UserService {
         wrapper.eq(DataUtils.isNotEmpty(mobile), UserDO::getMobile, mobile);
         wrapper.eq(DataUtils.isNotEmpty(id), UserDO::getId, id);
         return userMapper.selectList(wrapper);
+    }
+
+    /**
+     * 判断用户是否存在
+     *
+     * @param ids 不存在的用户
+     * @return
+     */
+    @Override
+    public List<Long> getNotExistUid(List<Long> ids) {
+        List<UserDO> userDOS = userDao.queryUsers(ids);
+        ids.removeAll(userDOS.stream().map(UserDO::getId).collect(Collectors.toList()));
+        return ids;
     }
 
     /**
@@ -112,4 +130,6 @@ public class UserServiceImpl implements UserService {
                 .sign(Algorithm.HMAC256(user.getPassword()));
         return token;
     }
+
+
 }

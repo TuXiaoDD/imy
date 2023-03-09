@@ -21,5 +21,8 @@ public class UserInfoVO {
     @JsonProperty("nickname")
     private String nickname;
     @JsonProperty("uid")
-    private Integer uid;
+    private Long uid;
+
+
+
 }
