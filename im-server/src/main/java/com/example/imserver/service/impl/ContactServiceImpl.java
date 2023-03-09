@@ -1,6 +1,5 @@
 package com.example.imserver.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.common.page.PageQuery;
 import com.example.common.utils.Assert;
 import com.example.common.utils.DataUtils;
@@ -10,6 +9,7 @@ import com.example.imserver.controller.vo.ContactDetailVO;
 import com.example.imserver.controller.vo.ContactListVO;
 import com.example.imserver.controller.vo.FriendApplyRecordVO;
 import com.example.imserver.controller.vo.UserInfoVO;
+import com.example.imserver.dao.mapper.UserMapper;
 import com.example.imserver.entity.FriendDO;
 import com.example.imserver.entity.UserDO;
 import com.example.imserver.service.ContactService;
@@ -22,6 +22,7 @@ import org.checkerframework.checker.units.qual.C;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,6 +34,9 @@ public class ContactServiceImpl implements ContactService {
     UserService userService;
     @Autowired
     FriendService friendService;
+
+    @Autowired
+    UserMapper userMapper;
 
 
     @Override
@@ -66,6 +70,28 @@ public class ContactServiceImpl implements ContactService {
         FriendApplyRecordVO vo = new FriendApplyRecordVO();
         return vo;
     }
+
+    /**
+     * @params: []
+     * @return: java.util.List<com.example.imserver.controller.vo.ContactListVO>
+     * @description: 根据该用户的id，查询其所有通讯录好友列表
+     */
+//    @Override
+//    public List<ContactVO> queryContactList(Long uid) {
+//        //查询该uid用户下的所有好友关联信息
+//        List<FriendDO> friendList = contactMapper.queryFriendRelationInfo(uid);
+//        //获取所有好友的uid
+//        List<Long> friendIdList = new ArrayList<>();
+//        for (FriendDO friendDO : friendList) {
+//            Long friendUid = friendDO.getFriendUid();
+//            friendIdList.add(friendUid);
+//        }
+//        log.info("获取好友id结果：<{}>", friendIdList);
+//        //查找所有好友信息
+//        List<ContactVO> contactList = contactMapper.queryContactList(friendIdList);
+//        log.info("获取好友列表结果：<{}>", contactList);
+//        return contactList;
+//    }
 
     @Override
     public void applyCreate(AddFriendDTO dto, Long uid) {
