@@ -13,7 +13,6 @@ import com.example.imserver.service.FriendService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,6 +25,7 @@ public class FriendServiceImpl implements FriendService {
 
     /**
      * 查询uid的好友 好友的uid是friendUid
+     *
      * @param uid
      * @param friendUid
      * @return
@@ -54,10 +54,10 @@ public class FriendServiceImpl implements FriendService {
 
     }
 
-    public List<FriendDO> list(Long uid, List<Long> ids) {
+    public List<FriendDO> list(Long uid, List<Long> friendIds) {
         LambdaQueryWrapper<FriendDO> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(FriendDO::getFriendStatus, FriendStatusEnum.NORMAL.getStatus());
-        wrapper.in(DataUtils.isNotEmpty(ids), FriendDO::getFriendUid, ids);
+        wrapper.in(DataUtils.isNotEmpty(friendIds), FriendDO::getFriendUid, friendIds);
         wrapper.eq(FriendDO::getUid, uid);
         return friendMapper.selectList(wrapper);
     }

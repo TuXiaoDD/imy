@@ -1,6 +1,7 @@
 package com.example.imserver.entity;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 import lombok.Data;
 
@@ -21,9 +22,9 @@ public class GroupMemberDO implements Serializable {
      */
     private String groupRemark;
 
-    private Date addTime;
+    private LocalDateTime addTime;
 
-    private Date updateTime;
+    private LocalDateTime updateTime;
 
     private Integer isDelete;
 

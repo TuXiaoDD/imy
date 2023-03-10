@@ -27,5 +27,5 @@ public interface FriendService {
 
     List<Long> getNotFriendUid(Long uid, List<Long> ids);
 
-    List<FriendDO> list(Long uid, List<Long> ids);
+    List<FriendDO> list(Long uid, List<Long> friendIds);
 }

@@ -2,6 +2,7 @@ package com.example.imserver.service;
 
 import com.example.common.page.PageQuery;
 import com.example.imserver.controller.dto.AddFriendDTO;
+import com.example.imserver.controller.dto.ApplyAcceptTO;
 import com.example.imserver.controller.dto.ContactListDTO;
 import com.example.imserver.controller.vo.*;
 
@@ -11,13 +12,15 @@ public interface ContactService {
 
     ContactDetailVO contactDetail(Long friendUid,Long uid);
 
-    FriendApplyRecordVO applyRecords(Long uid, PageQuery pageQuery);
+    List<FriendApplyRecordVO> applyRecords(Long uid);
 
     void applyCreate(AddFriendDTO dto, Long uid);
 
     List<ContactListVO> queryContactList(ContactListDTO dto);
 
     SearchUserVO search(Long uid, String mobile);
+
+    void applyAccept(ApplyAcceptTO dto, Long uid);
 
     /**
      * @params: []

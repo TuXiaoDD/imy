@@ -103,3 +103,20 @@ create table imy.single_message
     msg_hash    varchar(256)                        not null
 )
     comment '消息表';
+
+
+create table friend_apply
+(
+    id bigint auto_increment,
+    add_time timestamp default now() null,
+    update_time timestamp null,
+    uid bigint not null,
+    apply_uid bigint not null comment '需要添加好友的uid',
+    relation_type int default 0 null comment '好友分组',
+    remark text null comment '申请理由',
+    is_delete int default 0 null,
+    constraint friend_apply_pk
+        primary key (id)
+)
+    comment '好友申请表';
+

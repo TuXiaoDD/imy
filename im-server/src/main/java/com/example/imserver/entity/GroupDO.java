@@ -1,6 +1,7 @@
 package com.example.imserver.entity;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import com.baomidou.mybatisplus.annotation.IdType;
@@ -18,9 +19,9 @@ public class GroupDO{
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
-    private Date addTime;
+    private LocalDateTime addTime;
 
-    private Date updateTime;
+    private LocalDateTime updateTime;
 
     private Integer isDelete;
 

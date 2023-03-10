@@ -1,6 +1,7 @@
 package com.example.imserver.entity;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 import lombok.Data;
 
@@ -12,9 +13,9 @@ import lombok.Data;
 public class SingleMessageDO implements Serializable {
     private Long id;
 
-    private Date addTime;
+    private LocalDateTime addTime;
 
-    private Date updateTime;
+    private LocalDateTime updateTime;
 
     private Integer isDelete;
 

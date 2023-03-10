@@ -1,19 +1,22 @@
 package com.example.imserver.controller.dto;
 
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
 
+/**
+ * 接受好友申请
+ */
 @NoArgsConstructor
 @Data
-public class AddFriendDTO {
+public class ApplyAcceptTO {
 
-    @JsonProperty("friend_id")
+    @JsonProperty("apply_id")
     @NotNull
-    private Long friendId;
+    private Long applyId;
     @JsonProperty("remark")
     private String remark;
-    private Integer relationType = 0;
 }

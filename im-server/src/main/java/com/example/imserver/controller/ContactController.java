@@ -3,6 +3,7 @@ package com.example.imserver.controller;
 import com.example.common.page.PageQuery;
 import com.example.imserver.annotation.NotRequireLogin;
 import com.example.imserver.controller.dto.AddFriendDTO;
+import com.example.imserver.controller.dto.ApplyAcceptTO;
 import com.example.imserver.controller.dto.ContactListDTO;
 import com.example.imserver.controller.vo.*;
 import com.example.imserver.controller.vo.group.GroupVo;
@@ -59,10 +60,10 @@ public class ContactController {
     }
 
     /**
-      * @params: []
-      * @return: java.util.List<com.example.imserver.controller.vo.ContactListVO>
-      * @description:  获取通讯录好友列表
-      */
+     * @params: []
+     * @return: java.util.List<com.example.imserver.controller.vo.ContactListVO>
+     * @description: 获取通讯录好友列表
+     */
     @GetMapping("/list")
     public List<ContactListVO> contactList(ContactListDTO dto) {
         return contactService.queryContactList(dto);
@@ -76,22 +77,34 @@ public class ContactController {
     }
 
     @GetMapping("/detail")
-    public ContactDetailVO contactDetail(@NotNull Long friendUid,Long uid) {
-        return contactService.contactDetail(friendUid,uid);
+    public ContactDetailVO contactDetail(@NotNull Long friendUid, Long uid) {
+        return contactService.contactDetail(friendUid, uid);
     }
 
+    /**
+     * 好友申请列表
+     * @param uid
+     * @return
+     */
     @GetMapping("/apply/records")
-    public FriendApplyRecordVO applyRecords(Long uid, PageQuery pageQuery) {
-        return contactService.applyRecords(uid, pageQuery);
+    public List<FriendApplyRecordVO> applyRecords(Long uid) {
+        return contactService.applyRecords(uid);
     }
 
+    /**
+     * 通过手机号搜索好友
+     * @param uid
+     * @param mobile
+     * @return
+     */
     @GetMapping("/search")
     public SearchUserVO search(Long uid, @NotNull String mobile) {
         return contactService.search(uid, mobile);
     }
 
     /**
-     * 添加好友
+     * 添加好友申请
+     *
      * @param dto
      * @param uid
      * @return
@@ -99,5 +112,16 @@ public class ContactController {
     @PostMapping("/apply/create")
     public void applyCreate(@RequestBody @Valid AddFriendDTO dto, Long uid) {
         contactService.applyCreate(dto, uid);
+    }
+    /**
+     * 处理好友申请
+     *
+     * @param dto
+     * @param uid
+     * @return
+     */
+    @PostMapping("/apply/accept")
+    public void applyAccept(@RequestBody @Valid ApplyAcceptTO dto, Long uid) {
+        contactService.applyAccept(dto, uid);
     }
 }
