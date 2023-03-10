@@ -24,6 +24,12 @@ public class FriendServiceImpl implements FriendService {
     @Autowired
     FriendMapper friendMapper;
 
+    /**
+     * 查询uid的好友 好友的uid是friendUid
+     * @param uid
+     * @param friendUid
+     * @return
+     */
     @Override
     public FriendDO queryByUid(Long uid, Long friendUid) {
         LambdaQueryWrapper<FriendDO> wrapper = new LambdaQueryWrapper<>();

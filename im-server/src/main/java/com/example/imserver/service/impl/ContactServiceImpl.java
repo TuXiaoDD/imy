@@ -5,10 +5,7 @@ import com.example.common.utils.Assert;
 import com.example.common.utils.DataUtils;
 import com.example.imserver.controller.dto.AddFriendDTO;
 import com.example.imserver.controller.dto.ContactListDTO;
-import com.example.imserver.controller.vo.ContactDetailVO;
-import com.example.imserver.controller.vo.ContactListVO;
-import com.example.imserver.controller.vo.FriendApplyRecordVO;
-import com.example.imserver.controller.vo.UserInfoVO;
+import com.example.imserver.controller.vo.*;
 import com.example.imserver.dao.mapper.UserMapper;
 import com.example.imserver.entity.FriendDO;
 import com.example.imserver.entity.UserDO;
@@ -19,6 +16,7 @@ import com.example.imserver.service.converter.UserConverter;
 import com.example.imserver.service.query.UserQuery;
 import lombok.extern.slf4j.Slf4j;
 import org.checkerframework.checker.units.qual.C;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -92,7 +90,6 @@ public class ContactServiceImpl implements ContactService {
 //        log.info("获取好友列表结果：<{}>", contactList);
 //        return contactList;
 //    }
-
     @Override
     public void applyCreate(AddFriendDTO dto, Long uid) {
         FriendDO friendDO = friendService.queryByUid(uid, dto.getFriendId());
@@ -120,13 +117,15 @@ public class ContactServiceImpl implements ContactService {
     }
 
     @Override
-    public Long search(Long uid, String mobile) {
+    public SearchUserVO search(Long uid, String mobile) {
         UserQuery query = new UserQuery();
         query.setMobile(mobile);
         List<UserDO> userDOS = userService.queryUser(query);
         Assert.notEmpty(userDOS, "用户不存在");
         UserDO userDO = userDOS.get(0);
-        return userDO.getId();
+        SearchUserVO vo = new SearchUserVO();
+        BeanUtils.copyProperties(userDO, vo);
+        return vo;
 //
 //        Long id = userDO.getId();
 //        FriendDO friendDO = friendService.queryByUid(uid, id);

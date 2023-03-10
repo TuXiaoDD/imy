@@ -76,8 +76,8 @@ public class ContactController {
     }
 
     @GetMapping("/detail")
-    public ContactDetailVO contactDetail(@NotNull Long user_id,Long uid) {
-        return contactService.contactDetail(user_id,uid);
+    public ContactDetailVO contactDetail(@NotNull Long friendUid,Long uid) {
+        return contactService.contactDetail(friendUid,uid);
     }
 
     @GetMapping("/apply/records")
@@ -86,7 +86,7 @@ public class ContactController {
     }
 
     @GetMapping("/search")
-    public Long search(Long uid, @NotNull String mobile) {
+    public SearchUserVO search(Long uid, @NotNull String mobile) {
         return contactService.search(uid, mobile);
     }
 
