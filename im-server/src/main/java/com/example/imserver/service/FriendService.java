@@ -28,4 +28,7 @@ public interface FriendService {
     List<Long> getNotFriendUid(Long uid, List<Long> ids);
 
     List<FriendDO> list(Long uid, List<Long> friendIds);
+
+    /*删除好友*/
+    int deleteFriend(Long uid, Long friendUid);
 }

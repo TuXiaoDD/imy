@@ -57,6 +57,12 @@ public class FriendDO {
      * 消息已读未读
      */
     private Integer unread;
+
+    /**
+     * 消息已读未读
+     */
+    private Integer isDelete;
+
     /**
      * 好友状态
      * @see FriendStatusEnum

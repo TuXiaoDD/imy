@@ -9,4 +9,6 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface FriendMapper extends BaseMapper<FriendDO> {
+    int deleteFriend(Long uid, Long friendUid);
+
 }

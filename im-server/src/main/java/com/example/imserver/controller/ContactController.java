@@ -5,10 +5,12 @@ import com.example.imserver.annotation.NotRequireLogin;
 import com.example.imserver.controller.dto.AddFriendDTO;
 import com.example.imserver.controller.dto.ApplyAcceptTO;
 import com.example.imserver.controller.dto.ContactListDTO;
+import com.example.imserver.controller.dto.DeleteFriendDTO;
 import com.example.imserver.controller.vo.*;
 import com.example.imserver.controller.vo.group.GroupVo;
 import com.example.imserver.service.CacheService;
 import com.example.imserver.service.ContactService;
+import com.example.imserver.service.FriendService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -29,6 +31,9 @@ public class ContactController {
 
     @Autowired
     ContactService contactService;
+
+    @Autowired
+    FriendService friendService;
 
     @Autowired
     CacheService cacheService;
@@ -67,13 +72,6 @@ public class ContactController {
     @GetMapping("/list")
     public List<ContactListVO> contactList(ContactListDTO dto) {
         return contactService.queryContactList(dto);
-    }
-
-    @PostMapping("/add")
-    @NotRequireLogin
-    public Long addContact() {
-
-        return 1L;
     }
 
     @GetMapping("/detail")
@@ -124,4 +122,16 @@ public class ContactController {
     public void applyAccept(@RequestBody @Valid ApplyAcceptTO dto, Long uid) {
         contactService.applyAccept(dto, uid);
     }
+
+    /**
+    * @description: 删除好友
+    * @params:
+    * @return:
+      */
+    @PostMapping("/delete")
+    public int deleteFriend(@RequestBody DeleteFriendDTO dto) {
+        return friendService.deleteFriend(dto.getUid(), dto.getFriendUid());
+    }
+
+
 }
