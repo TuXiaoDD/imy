@@ -20,6 +20,4 @@ public class DeleteFriendDTO {
     @NotNull
     private Long uid;
 
-    //@NotNull
-    //private String userMobile;
 }

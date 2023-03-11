@@ -58,10 +58,10 @@ public class FriendDO {
      */
     private Integer unread;
 
-    /**
-     * 消息已读未读
-     */
-    private Integer isDelete;
+    ///**
+    // * 消息已读未读
+    // */
+    //private Integer isDelete;
 
     /**
      * 好友状态
