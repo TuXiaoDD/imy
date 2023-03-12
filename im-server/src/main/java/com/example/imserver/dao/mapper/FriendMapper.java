@@ -11,4 +11,5 @@ import org.apache.ibatis.annotations.Mapper;
 public interface FriendMapper extends BaseMapper<FriendDO> {
     int deleteFriend(Long uid, Long friendUid);
 
+    int editRemark(Long uid, Long friendUid, String remark);
 }

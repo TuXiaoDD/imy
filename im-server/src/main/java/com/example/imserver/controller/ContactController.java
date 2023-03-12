@@ -1,11 +1,11 @@
 package com.example.imserver.controller;
 
+import com.example.common.exception.BizException;
 import com.example.common.page.PageQuery;
+import com.example.common.response.Response;
+import com.example.common.response.ResultCode;
 import com.example.imserver.annotation.NotRequireLogin;
-import com.example.imserver.controller.dto.AddFriendDTO;
-import com.example.imserver.controller.dto.ApplyAcceptTO;
-import com.example.imserver.controller.dto.ContactListDTO;
-import com.example.imserver.controller.dto.DeleteFriendDTO;
+import com.example.imserver.controller.dto.*;
 import com.example.imserver.controller.vo.*;
 import com.example.imserver.controller.vo.group.GroupVo;
 import com.example.imserver.service.CacheService;
@@ -44,9 +44,9 @@ public class ContactController {
      * @return
      */
     @GetMapping("/apply/unread-num")
-    public UnReadNumVO unReadNum() {
+    public int unReadNum() {
         UnReadNumVO unReadNumVO = new UnReadNumVO();
-        return unReadNumVO;
+        return 1;
     }
 
 
@@ -133,5 +133,15 @@ public class ContactController {
         return friendService.deleteFriend(dto.getUid(), dto.getFriendUid());
     }
 
+    /**
+    * @description: 修改好有备注
+    * @params:
+    * @return:
+      */
+    @PostMapping("/edit-remark")
+    public int editRemark(@RequestBody EditFriendDTO editFriendDTO) {
+        Long friendUid = editFriendDTO.getFriendUid();
+        return friendService.editRemark(editFriendDTO);
+    }
 
 }

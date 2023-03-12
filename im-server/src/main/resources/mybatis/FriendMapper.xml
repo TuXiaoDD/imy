@@ -15,7 +15,7 @@
         <result column="relation_type" jdbcType="INTEGER" property="relationType"/>
         <result column="latest_msg" jdbcType="VARCHAR" property="latestMsg"/>
         <result column="add_time" jdbcType="TIMESTAMP" property="addTime"/>
-<!--        <result column="is_delete" jdbcType="INTEGER" property="isDelete"/>-->
+        <!--        <result column="is_delete" jdbcType="INTEGER" property="isDelete"/>-->
         <result column="unread" jdbcType="INTEGER" property="unread"/>
         <result column="friend_status" jdbcType="INTEGER" property="friendStatus"/>
     </resultMap>
@@ -26,4 +26,10 @@
         where uid = #{uid}
           and friend_uid = #{friendUid}
     </delete>
+    <update id="editRemark">
+        update imy.friend
+        set remark = #{remark}
+        where uid = #{uid}
+          and friend_uid = #{friendUid}
+    </update>
 </mapper>
