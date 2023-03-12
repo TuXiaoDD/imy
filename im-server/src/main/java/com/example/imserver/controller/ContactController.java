@@ -10,6 +10,7 @@ import com.example.imserver.controller.vo.*;
 import com.example.imserver.controller.vo.group.GroupVo;
 import com.example.imserver.service.CacheService;
 import com.example.imserver.service.ContactService;
+import com.example.imserver.service.FriendApplyService;
 import com.example.imserver.service.FriendService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,15 +39,17 @@ public class ContactController {
     @Autowired
     CacheService cacheService;
 
+    @Autowired
+    FriendApplyService friendApplyService;
+
     /**
-     * 未读消息数
+     * 好友申请未读消息数
      *
      * @return
      */
     @GetMapping("/apply/unread-num")
-    public int unReadNum() {
-        UnReadNumVO unReadNumVO = new UnReadNumVO();
-        return 1;
+    public int unReadNum(Long uid) {
+        return friendApplyService.countUnread(uid);
     }
 
 
