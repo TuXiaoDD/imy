@@ -127,6 +127,7 @@
         select count(distinct apply_uid)
         from imy.friend_apply
         where uid = #{uid}
+          and is_delete = 0
     </select>
 
 </mapper>
