@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.example.common.utils.DataUtils;
 import com.example.imserver.annotation.NotRequireLogin;
 
+import java.io.IOException;
 import java.util.Map;
 
 @Component

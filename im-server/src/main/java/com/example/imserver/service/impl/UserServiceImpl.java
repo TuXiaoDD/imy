@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public LoginVO login(LoginDTO dto, HttpServletResponse response) {
+    public LoginVO login(LoginDTO dto) {
         String mobile = dto.getMobile();
         String password = getEncryptPassword(dto.getPassword());
         List<UserDO> userDOS = queryUser(UserQuery.builder().mobile(mobile).build());

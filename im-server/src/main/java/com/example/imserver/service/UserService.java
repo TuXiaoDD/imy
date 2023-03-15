@@ -21,7 +21,7 @@ import java.util.List;
 public interface UserService {
     List<UserDO> query(List<Long> ids);
 
-    LoginVO login(LoginDTO dto, HttpServletResponse response);
+    LoginVO login(LoginDTO dto);
 
     Long register(RegisterDTO dto);
 

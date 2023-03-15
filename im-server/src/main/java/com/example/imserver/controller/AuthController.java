@@ -28,8 +28,8 @@ public class AuthController {
      */
     @PostMapping("/login")
     @NotRequireLogin
-    public LoginVO login(@RequestBody @Valid LoginDTO dto, HttpServletResponse response) {
-        return userService.login(dto,response);
+    public LoginVO login(@RequestBody @Valid LoginDTO dto) {
+        return userService.login(dto);
     }
 
     /**
