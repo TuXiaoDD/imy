@@ -1,4 +1,5 @@
 package com.example.imserver.interceptor;
+import com.example.common.utils.DataUtils;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -20,7 +21,6 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.example.common.utils.DataUtils;
 import com.example.imserver.annotation.NotRequireLogin;
 
 import java.util.Map;

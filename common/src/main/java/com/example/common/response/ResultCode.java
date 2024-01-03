@@ -5,11 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 
-/**
- * @author : wh
- * @date : 2021/12/22 14:37
- * @description: 业务代码枚举
- */
+
 @Getter
 @AllArgsConstructor
 public enum ResultCode implements IResultCode {

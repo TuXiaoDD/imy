@@ -21,6 +21,7 @@
         <module>example</module>
         <module>common</module>
         <module>im-server</module>
+        <module>im-tcp</module>
     </modules>
 
     <properties>
@@ -119,4 +120,12 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.0</version>
+        </dependency>
+    </dependencies>
 </project>

@@ -1,11 +1,10 @@
 package com.example.imserver.dao;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.example.common.utils.DataUtils;
 import com.example.imserver.entity.UserDO;
 import com.example.imserver.dao.mapper.UserMapper;
-import lombok.Data;
 import org.springframework.stereotype.Service;
+import com.example.common.utils.DataUtils;
 
 import java.util.List;
 import java.util.stream.Collectors;

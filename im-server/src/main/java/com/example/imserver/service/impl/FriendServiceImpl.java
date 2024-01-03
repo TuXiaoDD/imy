@@ -1,8 +1,8 @@
 package com.example.imserver.service.impl;
+import com.example.common.utils.DataUtils;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.example.common.page.PageQuery;
-import com.example.common.utils.DataUtils;
 import com.example.imserver.controller.dto.AddFriendDTO;
 import com.example.imserver.controller.vo.ContactDetailVO;
 import com.example.imserver.controller.vo.FriendApplyRecordVO;

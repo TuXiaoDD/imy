@@ -10,9 +10,7 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 
-/**
- * @author XiaoLei
- */
+
 public final class DataUtils {
 
     /**

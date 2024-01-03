@@ -1,6 +1,5 @@
 package com.example.imserver.service.impl;
 
-import com.example.common.utils.Assert;
 import com.example.imserver.controller.dto.group.GroupCreateDTO;
 import com.example.imserver.controller.dto.group.GroupListDTO;
 import com.example.imserver.controller.vo.group.GroupListVO;
@@ -11,7 +10,6 @@ import com.example.imserver.service.FriendService;
 import com.example.imserver.service.GroupService;
 import com.example.imserver.service.UserService;
 import com.example.imserver.service.converter.GroupConverter;
-import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
