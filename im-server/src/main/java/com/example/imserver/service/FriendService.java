@@ -2,6 +2,7 @@ package com.example.imserver.service;
 
 import com.example.common.page.PageQuery;
 import com.example.imserver.controller.dto.AddFriendDTO;
+import com.example.imserver.controller.dto.EditFriendDTO;
 import com.example.imserver.controller.vo.ContactDetailVO;
 import com.example.imserver.controller.vo.FriendApplyRecordVO;
 import com.example.imserver.entity.FriendDO;
@@ -28,4 +29,9 @@ public interface FriendService {
     List<Long> getNotFriendUid(Long uid, List<Long> ids);
 
     List<FriendDO> list(Long uid, List<Long> friendIds);
+
+    /*删除好友*/
+    int deleteFriend(Long uid, Long friendUid);
+
+    int editRemark(EditFriendDTO editFriendDTO);
 }

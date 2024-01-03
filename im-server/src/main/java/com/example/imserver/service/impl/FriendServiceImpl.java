@@ -2,8 +2,12 @@ package com.example.imserver.service.impl;
 import com.example.common.utils.DataUtils;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.example.common.exception.BizException;
 import com.example.common.page.PageQuery;
+import com.example.common.response.ResultCode;
+import com.example.common.utils.DataUtils;
 import com.example.imserver.controller.dto.AddFriendDTO;
+import com.example.imserver.controller.dto.EditFriendDTO;
 import com.example.imserver.controller.vo.ContactDetailVO;
 import com.example.imserver.controller.vo.FriendApplyRecordVO;
 import com.example.imserver.dao.mapper.FriendMapper;
@@ -60,6 +64,36 @@ public class FriendServiceImpl implements FriendService {
         wrapper.in(DataUtils.isNotEmpty(friendIds), FriendDO::getFriendUid, friendIds);
         wrapper.eq(FriendDO::getUid, uid);
         return friendMapper.selectList(wrapper);
+    }
+
+    /**
+    * @description:
+    * @params:
+    * @return:    删除好友
+      */
+    @Override
+    public int deleteFriend(Long uid, Long friendUid) {
+        int delete = friendMapper.deleteFriend(uid, friendUid);
+        if (delete != 1) {
+            throw new BizException(ResultCode.FAILURE, "删除好友失败！");
+        }
+        return delete;
+    }
+
+    /**
+     * @description:
+     * @params:
+     * @return:   修改好友备注
+     */
+    @Override
+    public int editRemark(EditFriendDTO editFriendDTO) {
+        //新的备注
+        String remark = editFriendDTO.getRemark();
+        int result = friendMapper.editRemark(editFriendDTO.getUid(), editFriendDTO.getFriendUid(), remark);
+        if (result != 1) {
+            throw new BizException(ResultCode.FAILURE, "修改好友备注失败！");
+        }
+        return result;
     }
 
 

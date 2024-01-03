@@ -1,122 +1,133 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.imserver.dao.mapper.FriendApplyMapper">
-  <resultMap id="BaseResultMap" type="com.example.imserver.entity.FriendApplyDO">
-    <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
-    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
-    <result column="uid" jdbcType="BIGINT" property="uid" />
-    <result column="apply_uid" jdbcType="BIGINT" property="applyUid" />
-    <result column="relation_type" jdbcType="INTEGER" property="relationType" />
-    <result column="remark" jdbcType="VARCHAR" property="remark" />
-    <result column="is_delete" jdbcType="INTEGER" property="isDelete" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    id, add_time, update_time, `uid`, apply_uid, relation_type, remark, is_delete
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from friend_apply
-    where id = #{id,jdbcType=BIGINT}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from friend_apply
-    where id = #{id,jdbcType=BIGINT}
-  </delete>
-  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.example.imserver.entity.FriendApplyDO" useGeneratedKeys="true">
-    insert into friend_apply (add_time, update_time, `uid`, 
-      apply_uid, relation_type, remark, 
-      is_delete)
-    values (#{addTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{uid,jdbcType=BIGINT}, 
-      #{applyUid,jdbcType=BIGINT}, #{relationType,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, 
-      #{isDelete,jdbcType=INTEGER})
-  </insert>
-  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.example.imserver.entity.FriendApplyDO" useGeneratedKeys="true">
-    insert into friend_apply
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="addTime != null">
-        add_time,
-      </if>
-      <if test="updateTime != null">
-        update_time,
-      </if>
-      <if test="uid != null">
-        `uid`,
-      </if>
-      <if test="applyUid != null">
-        apply_uid,
-      </if>
-      <if test="relationType != null">
-        relation_type,
-      </if>
-      <if test="remark != null">
-        remark,
-      </if>
-      <if test="isDelete != null">
-        is_delete,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="addTime != null">
-        #{addTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null">
-        #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="uid != null">
-        #{uid,jdbcType=BIGINT},
-      </if>
-      <if test="applyUid != null">
-        #{applyUid,jdbcType=BIGINT},
-      </if>
-      <if test="relationType != null">
-        #{relationType,jdbcType=INTEGER},
-      </if>
-      <if test="remark != null">
-        #{remark,jdbcType=VARCHAR},
-      </if>
-      <if test="isDelete != null">
-        #{isDelete,jdbcType=INTEGER},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.example.imserver.entity.FriendApplyDO">
-    update friend_apply
-    <set>
-      <if test="addTime != null">
-        add_time = #{addTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null">
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="uid != null">
-        `uid` = #{uid,jdbcType=BIGINT},
-      </if>
-      <if test="applyUid != null">
-        apply_uid = #{applyUid,jdbcType=BIGINT},
-      </if>
-      <if test="relationType != null">
-        relation_type = #{relationType,jdbcType=INTEGER},
-      </if>
-      <if test="remark != null">
-        remark = #{remark,jdbcType=VARCHAR},
-      </if>
-      <if test="isDelete != null">
-        is_delete = #{isDelete,jdbcType=INTEGER},
-      </if>
-    </set>
-    where id = #{id,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.example.imserver.entity.FriendApplyDO">
-    update friend_apply
-    set add_time = #{addTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
-      `uid` = #{uid,jdbcType=BIGINT},
-      apply_uid = #{applyUid,jdbcType=BIGINT},
-      relation_type = #{relationType,jdbcType=INTEGER},
-      remark = #{remark,jdbcType=VARCHAR},
-      is_delete = #{isDelete,jdbcType=INTEGER}
-    where id = #{id,jdbcType=BIGINT}
-  </update>
+    <resultMap id="BaseResultMap" type="com.example.imserver.entity.FriendApplyDO">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="add_time" jdbcType="TIMESTAMP" property="addTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="uid" jdbcType="BIGINT" property="uid"/>
+        <result column="apply_uid" jdbcType="BIGINT" property="applyUid"/>
+        <result column="relation_type" jdbcType="INTEGER" property="relationType"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="is_delete" jdbcType="INTEGER" property="isDelete"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id
+        , add_time, update_time, `uid`, apply_uid, relation_type, remark, is_delete
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from friend_apply
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete
+        from friend_apply
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.example.imserver.entity.FriendApplyDO"
+            useGeneratedKeys="true">
+        insert into friend_apply (add_time, update_time, `uid`,
+                                  apply_uid, relation_type, remark,
+                                  is_delete)
+        values (#{addTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{uid,jdbcType=BIGINT},
+                #{applyUid,jdbcType=BIGINT}, #{relationType,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR},
+                #{isDelete,jdbcType=INTEGER})
+    </insert>
+    <insert id="insertSelective" keyColumn="id" keyProperty="id"
+            parameterType="com.example.imserver.entity.FriendApplyDO" useGeneratedKeys="true">
+        insert into friend_apply
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="addTime != null">
+                add_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="uid != null">
+                `uid`,
+            </if>
+            <if test="applyUid != null">
+                apply_uid,
+            </if>
+            <if test="relationType != null">
+                relation_type,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+            <if test="isDelete != null">
+                is_delete,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="addTime != null">
+                #{addTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="uid != null">
+                #{uid,jdbcType=BIGINT},
+            </if>
+            <if test="applyUid != null">
+                #{applyUid,jdbcType=BIGINT},
+            </if>
+            <if test="relationType != null">
+                #{relationType,jdbcType=INTEGER},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="isDelete != null">
+                #{isDelete,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.example.imserver.entity.FriendApplyDO">
+        update friend_apply
+        <set>
+            <if test="addTime != null">
+                add_time = #{addTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="uid != null">
+                `uid` = #{uid,jdbcType=BIGINT},
+            </if>
+            <if test="applyUid != null">
+                apply_uid = #{applyUid,jdbcType=BIGINT},
+            </if>
+            <if test="relationType != null">
+                relation_type = #{relationType,jdbcType=INTEGER},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="isDelete != null">
+                is_delete = #{isDelete,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.example.imserver.entity.FriendApplyDO">
+        update friend_apply
+        set add_time      = #{addTime,jdbcType=TIMESTAMP},
+            update_time   = #{updateTime,jdbcType=TIMESTAMP},
+            `uid`         = #{uid,jdbcType=BIGINT},
+            apply_uid     = #{applyUid,jdbcType=BIGINT},
+            relation_type = #{relationType,jdbcType=INTEGER},
+            remark        = #{remark,jdbcType=VARCHAR},
+            is_delete     = #{isDelete,jdbcType=INTEGER}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <select id="countUnread" resultType="java.lang.Integer">
+        select count(distinct apply_uid)
+        from imy.friend_apply
+        where uid = #{uid}
+          and is_delete = 0
+    </select>
+
 </mapper>

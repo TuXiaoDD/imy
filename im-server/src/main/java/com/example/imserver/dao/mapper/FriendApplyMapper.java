@@ -18,4 +18,6 @@ public interface FriendApplyMapper extends BaseMapper<FriendApplyDO> {
     int updateByPrimaryKeySelective(FriendApplyDO record);
 
     int updateByPrimaryKey(FriendApplyDO record);
+
+    int countUnread(Long uid);
 }
