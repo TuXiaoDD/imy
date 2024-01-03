@@ -1,40 +1,47 @@
 package com.example.imserver.netty;
 
+import com.alibaba.fastjson.JSONObject;
+import com.auth0.jwt.JWT;
+import com.example.imserver.entity.UserDO;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
-import io.netty.handler.codec.http.DefaultFullHttpResponse;
-import io.netty.handler.codec.http.FullHttpRequest;
-import io.netty.handler.codec.http.HttpResponseStatus;
-import io.netty.handler.codec.http.HttpVersion;
+import io.netty.handler.codec.http.*;
+
 import io.netty.handler.codec.http.websocketx.*;
 import io.netty.util.CharsetUtil;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 
 import static io.netty.handler.codec.http.HttpUtil.isKeepAlive;
+import static io.netty.handler.codec.http.HttpVersion.HTTP_1_1;
 
 @Slf4j
-public class NioWebSocketHandler extends SimpleChannelInboundHandler<Object> {
+public class NioWebSocketHandler extends SimpleChannelInboundHandler<Message> {
 
 
-    private WebSocketServerHandshaker webSocketServerHandshaker;
+    private static final ByteBuf HEARTBEAT_SEQUENCE =
+            Unpooled.unreleasableBuffer(Unpooled.copiedBuffer("HEARTBEAT", CharsetUtil.UTF_8));
+    private static final int HEARTBEAT_INTERVAL_SECONDS = 20;
+
+    private ScheduledFuture<?> heartbeatScheduledFuture;
+
+    private WebSocketServerHandshaker handshaker;
 
     @Override
-    protected void channelRead0(ChannelHandlerContext ctx, Object msg) throws Exception {
-        log.debug("收到消息：" + msg);
-//        if (msg instanceof FullHttpRequest) {
-//            //以http请求形式接入，但是走的是websocket
-//            handleHttpRequest(ctx, (FullHttpRequest) msg);
-//        } else
-            if (msg instanceof WebSocketFrame) {
-            //处理websocket客户端的消息
-            handlerWebSocketFrame(ctx, (WebSocketFrame) msg);
-        }
+    protected void channelRead0(ChannelHandlerContext ctx, Message msg) throws Exception {
+        log.info("msg: {}",JSONObject.toJSONString(msg));
+
+
          ctx.channel().writeAndFlush(msg);
 
     }
@@ -42,90 +49,102 @@ public class NioWebSocketHandler extends SimpleChannelInboundHandler<Object> {
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         //添加连接
-        log.debug("客户端加入连接：" + ctx.channel());
-        ChannelSupervise.addChannel(ctx.channel());
+        System.out.println("客户端加入连接：" + ctx.channel());
+        startHeartbeat(ctx);
     }
 
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
-        //断开连接
-        log.debug("客户端断开连接：" + ctx.channel());
-        ChannelSupervise.removeChannel(ctx.channel());
+        stopHeartbeat();
+        super.channelInactive(ctx);
+
     }
 
-    @Override
-    public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
-        ctx.flush();
+    private void startHeartbeat(ChannelHandlerContext ctx) {
+
+        System.out.println("+++++++++++startHeartbeat"+ctx);
+
+        heartbeatScheduledFuture = ctx.executor().scheduleAtFixedRate(() -> {
+            ctx.writeAndFlush(HEARTBEAT_SEQUENCE.duplicate());
+        }, 0, HEARTBEAT_INTERVAL_SECONDS, TimeUnit.SECONDS);
     }
 
-    private void handlerWebSocketFrame(ChannelHandlerContext ctx, WebSocketFrame frame) {
-        // 判断是否关闭链路的指令
-        if (frame instanceof CloseWebSocketFrame) {
-            webSocketServerHandshaker.close(ctx.channel(), (CloseWebSocketFrame) frame.retain());
-            return;
+    private void stopHeartbeat() {
+        System.out.println("+++++++++++stopHeartbeat");
+
+        if (heartbeatScheduledFuture != null) {
+            heartbeatScheduledFuture.cancel(true);
+            heartbeatScheduledFuture = null;
         }
-        // 判断是否ping消息
-        if (frame instanceof PingWebSocketFrame) {
-            ctx.channel().write(
-                    new PongWebSocketFrame(frame.content().retain()));
-            return;
-        }
-        // 本例程仅支持文本消息，不支持二进制消息
-        if (!(frame instanceof TextWebSocketFrame)) {
-            log.debug("本例程仅支持文本消息，不支持二进制消息");
-            throw new UnsupportedOperationException(String.format(
-                    "%s frame types not supported", frame.getClass().getName()));
-        }
-        // 返回应答消息
-        String request = ((TextWebSocketFrame) frame).text();
-        log.debug("服务端收到：" + request);
-        TextWebSocketFrame tws = new TextWebSocketFrame(new Date().toString()
-                + ctx.channel().id() + "：" + request);
-        // 群发
-        ChannelSupervise.send2All(tws);
-        // 返回【谁发的发给谁】
-        // ctx.channel().writeAndFlush(tws);
     }
+
 
     /**
-     * 唯一的一次http请求，用于创建websocket
+     * 处理HTTP请求
+     *
+     * @param ctx
+     * @param request
      */
-    private void handleHttpRequest(ChannelHandlerContext ctx,  FullHttpRequest req) {
-        //要求Upgrade为websocket，过滤掉get/Post
-        if (!req.decoderResult().isSuccess()
-                || (!"websocket".equals(req.headers().get("Upgrade")))) {
-            //若不是websocket方式，则创建BAD_REQUEST的req，返回给客户端
-            sendHttpResponse(ctx, req, new DefaultFullHttpResponse(
-                    HttpVersion.HTTP_1_1, HttpResponseStatus.BAD_REQUEST));
+    private void handleHttpRequest(ChannelHandlerContext ctx, FullHttpRequest request) {
+        // WebSocket访问，处理握手升级。
+        if (request.headers().get("Connection").equals("Upgrade")) {
+            // Handshake
+            WebSocketServerHandshakerFactory wsFactory = new WebSocketServerHandshakerFactory("", null, true);
+            handshaker = wsFactory.newHandshaker(request);
+            if (handshaker == null) {
+                // 无法处理的WebSocket版本
+                WebSocketServerHandshakerFactory.sendUnsupportedVersionResponse(ctx.channel());
+                return;
+            }
+
+            // 验证token
+            String token = getRequestParameter(request, "token");
+            if (token == null) {
+                FullHttpResponse response = new DefaultFullHttpResponse(HTTP_1_1, HttpResponseStatus.UNAUTHORIZED,
+                        Unpooled.copiedBuffer("Token not found in request url", CharsetUtil.UTF_8));
+                ctx.writeAndFlush(response).addListener(ChannelFutureListener.CLOSE);
+                log.error("Token not found in request url");
+                return;
+            }
+
+
+            try {
+                String decode = JWT.decode(token).getAudience().get(0);
+                String[] strings = decode.split("\\.");
+
+            } catch (Exception e) {
+                FullHttpResponse response = new DefaultFullHttpResponse(HTTP_1_1, HttpResponseStatus.UNAUTHORIZED,
+                        Unpooled.copiedBuffer("Token is not available", CharsetUtil.UTF_8));
+                ctx.writeAndFlush(response).addListener(ChannelFutureListener.CLOSE);
+                log.error("Token is not available");
+                return;
+            }
+
+            // 向客户端发送WebSocket握手，完成握手。
+            ChannelFuture channelFuture = handshaker.handshake(ctx.channel(), request);
+            channelFuture.addListener(new ChannelFutureListener() {
+                @Override
+                public void operationComplete(ChannelFuture future) throws Exception {
+                    if (!future.isSuccess()) {
+                        future.channel().close();
+                        return;
+                    }
+                    // 加入到ChannelHolders中
+                    ChannelSupervise.addChannel(future.channel());
+                }
+            });
             return;
         }
-        WebSocketServerHandshakerFactory wsFactory = new WebSocketServerHandshakerFactory(
-                "ws://localhost:80/wss/{token}", null, false);
-        webSocketServerHandshaker = wsFactory.newHandshaker(req);
-        if (webSocketServerHandshaker == null) {
-            WebSocketServerHandshakerFactory
-                    .sendUnsupportedVersionResponse(ctx.channel());
-        } else {
-            webSocketServerHandshaker.handshake(ctx.channel(), req);
-        }
     }
-
-    /**
-     * 拒绝不合法的请求，并返回错误信息
-     */
-    private static void sendHttpResponse(ChannelHandlerContext ctx,
-                                         FullHttpRequest req, DefaultFullHttpResponse res) {
-        // 返回应答给客户端
-        if (res.status().code() != 200) {
-            ByteBuf buf = Unpooled.copiedBuffer(res.status().toString(),
-                    CharsetUtil.UTF_8);
-            res.content().writeBytes(buf);
-            buf.release();
+    private static String getRequestParameter(FullHttpRequest req, String name) {
+        QueryStringDecoder decoder = new QueryStringDecoder(req.uri());
+        Map<String, List<String>> parameters = decoder.parameters();
+        Set<Map.Entry<String, List<String>>> entrySet = parameters.entrySet();
+        for (Map.Entry<String, List<String>> entry : entrySet) {
+            if (entry.getKey().equalsIgnoreCase(name)) {
+                return entry.getValue().get(0);
+            }
         }
-        ChannelFuture f = ctx.channel().writeAndFlush(res);
-        // 如果是非Keep-Alive，关闭连接
-        if (!isKeepAlive(req) || res.status().code() != 200) {
-            f.addListener(ChannelFutureListener.CLOSE);
-        }
+        return null;
     }
 }

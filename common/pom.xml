@@ -27,6 +27,10 @@
             <version>5.3.1</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId></groupId>
+            <artifactId>aop</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

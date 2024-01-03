@@ -97,10 +97,11 @@
                 <artifactId>caffeine</artifactId>
                 <version>3.1.1</version>
             </dependency>
+            <!-- https://mvnrepository.com/artifact/io.netty/netty-all -->
             <dependency>
                 <groupId>io.netty</groupId>
                 <artifactId>netty-all</artifactId>
-                <version>4.1.39.Final</version>
+                <version>4.1.67.Final</version>
             </dependency>
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
@@ -132,6 +133,13 @@
                     </exclusion>
                 </exclusions>
             </dependency>
+
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>2.0.22</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 </project>
