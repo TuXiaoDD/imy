@@ -70,8 +70,9 @@ public class NettyServer implements LifeCycle {
                 });
         try {
             serverBootstrap.bind().sync();
+            log.info("NettyServer start success, port: {}", this.port);
         } catch (InterruptedException e) {
-
+            log.error("NettyServer start error", e);
             throw new RuntimeException(e);
         }
 
