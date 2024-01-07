@@ -1,71 +1,69 @@
-package com.imtcp.server;
+package com.lym.client.http;
 
 import com.imtcp.LifeCycle;
 import com.imtcp.config.BaseConfig;
 import com.imtcp.handler.NettyHttpConnectionHandler;
 import com.imtcp.handler.NettyHttpServerHandler;
+import com.lym.client.echo.EchoServer;
 import io.netty.bootstrap.ServerBootstrap;
+import io.netty.buffer.ByteBuf;
+import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.codec.ByteToMessageDecoder;
 import io.netty.handler.codec.http.*;
-import io.netty.handler.codec.string.StringDecoder;
-import io.netty.handler.codec.string.StringEncoder;
 import lombok.extern.slf4j.Slf4j;
 
 import java.net.InetSocketAddress;
+import java.util.List;
 
 @Slf4j
-public class NettyServer implements LifeCycle {
+public class NettyHTTPServer {
 
     private int port = 9999;
-    private BaseConfig baseConfig;
 
     private ServerBootstrap serverBootstrap;
 
     private EventLoopGroup bossEventLoopGroup;
     private EventLoopGroup workEventLoopGroup;
 
-    public NettyServer(BaseConfig baseConfig) {
-        this.baseConfig = baseConfig;
-        if (this.baseConfig.getPort() > 0 && this.baseConfig.getPort() < 65535) {
-            this.port = this.baseConfig.getPort();
-        }
+
+    public NettyHTTPServer() {
         init();
     }
 
-
-    @Override
     public void init() {
         serverBootstrap = new ServerBootstrap();
-        //todo epoll
-        bossEventLoopGroup = new NioEventLoopGroup(baseConfig.getBossGroupNum());
-        workEventLoopGroup = new NioEventLoopGroup(baseConfig.getWorkGroupNum());
+        bossEventLoopGroup = new NioEventLoopGroup();
+        workEventLoopGroup = new NioEventLoopGroup();
     }
 
-    @Override
+    public static void main(String[] args) {
+        new NettyHTTPServer().start();
+    }
+
     public void start() {
         serverBootstrap.group(bossEventLoopGroup, workEventLoopGroup)
                 .channel(NioServerSocketChannel.class)
                 .option(ChannelOption.SO_BACKLOG, 1024)// boss accept
                 .option(ChannelOption.SO_REUSEADDR, true)// tcp端口重绑定
-//                .option(ChannelOption.SO_KEEPALIVE, false)
-//                .childOption(ChannelOption.TCP_NODELAY, true)//NODELA算法小数据合并
-//                .childOption(ChannelOption.SO_RCVBUF, 65535)
-//                .childOption(ChannelOption.SO_SNDBUF, 65535)
+                .option(ChannelOption.SO_KEEPALIVE, false)
+                .childOption(ChannelOption.TCP_NODELAY, true)//NODELA算法小数据合并
+                .childOption(ChannelOption.SO_RCVBUF, 65535)
+                .childOption(ChannelOption.SO_SNDBUF, 65535)
                 .localAddress(new InetSocketAddress(this.port))
                 .childHandler(new ChannelInitializer<SocketChannel>() {
                     @Override
                     protected void initChannel(SocketChannel socketChannel) throws Exception {
                         socketChannel.pipeline()
                                 .addLast(new HttpServerCodec())
-                                .addLast(new HttpObjectAggregator(baseConfig.getMaxContentLength()))
+//                                .addLast(new MyByteToMessageDecoder())
+                                .addLast(new HttpObjectAggregator(65535))
                                 .addLast(new HttpServerExpectContinueHandler())
-                                .addLast(new HttpRequestDecoder())
-                                .addLast(new HttpResponseEncoder())
                                 .addLast(new NettyHttpConnectionHandler())
                                 .addLast(new NettyHttpServerHandler());
                     }
@@ -80,7 +78,14 @@ public class NettyServer implements LifeCycle {
 
     }
 
-    @Override
+
+    @Slf4j
+    public static class MyByteToMessageDecoder extends HttpRequestDecoder {
+
+
+
+    }
+
     public void shutdown() {
         if (bossEventLoopGroup != null) {
             bossEventLoopGroup.shutdownGracefully();
