@@ -60,7 +60,7 @@ public class RequestUtils {
             pack.setHeader(header);
 
             // todo 暂时先塞回去
-            pack.setData(request);
+            pack.setRequest(request);
             return pack;
         } catch (Exception e) {
             throw new RuntimeException("请求参数不合法");

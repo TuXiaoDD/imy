@@ -48,10 +48,13 @@ public class UserServiceImpl implements UserService {
         List<UserDO> userDOS = queryUser(UserQuery.builder().mobile(mobile).build());
         Assert.isTrue(DataUtils.isNotEmpty(userDOS), "用户不存在!");
         UserDO userDO = userDOS.get(0);
-        //Assert.isTrue(Objects.equals(password, userDO.getPassword()), "密码不正确!");
-        String token = getToken(userDO);
+        Assert.isTrue(Objects.equals(password, userDO.getPassword()), "密码不正确!");
+        Date start = new Date();
+        String token = getToken(userDO, start);
+        String refreshToken = getRefreshToken(userDO, start);
         LoginVO vo = new LoginVO();
         vo.setAccessToken(token);
+        vo.setRefreshToken(refreshToken);
         vo.setExpiresIn(Constant.TOKEN_EXPIRE);
         return vo;
     }
@@ -122,14 +125,23 @@ public class UserServiceImpl implements UserService {
         return DigestUtils.md5DigestAsHex(("leMin" + password).getBytes());
     }
 
-    private String getToken(UserDO user) {
-        Date start = new Date();
+    private String getToken(UserDO user,Date start) {
         Date end = new Date(start.getTime() + Constant.TOKEN_EXPIRE);
+        Date refreshEnd = new Date(start.getTime() + Constant.REFRESH_TOKEN_EXPIRE);
+        String token = "";
+        String refreshToken = "";
+        token = JWT.create().withAudience(user.getId() + ".yyM").withIssuedAt(start).withExpiresAt(end)
+                .sign(Algorithm.HMAC256(user.getPassword()));
+        return token;
+
+    }
+
+    private String getRefreshToken(UserDO user,Date start) {
+        Date end = new Date(start.getTime() + Constant.REFRESH_TOKEN_EXPIRE);
         String token = "";
         token = JWT.create().withAudience(user.getId() + ".yyM").withIssuedAt(start).withExpiresAt(end)
                 .sign(Algorithm.HMAC256(user.getPassword()));
         return token;
     }
-
 
 }

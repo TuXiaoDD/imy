@@ -52,10 +52,10 @@ public class NettyServer implements LifeCycle {
                 .channel(NioServerSocketChannel.class)
                 .option(ChannelOption.SO_BACKLOG, 1024)// boss accept
                 .option(ChannelOption.SO_REUSEADDR, true)// tcp端口重绑定
-//                .option(ChannelOption.SO_KEEPALIVE, false)
-//                .childOption(ChannelOption.TCP_NODELAY, true)//NODELA算法小数据合并
-//                .childOption(ChannelOption.SO_RCVBUF, 65535)
-//                .childOption(ChannelOption.SO_SNDBUF, 65535)
+                .option(ChannelOption.SO_KEEPALIVE, false)
+                .childOption(ChannelOption.TCP_NODELAY, true)//NODELA算法小数据合并
+                .childOption(ChannelOption.SO_RCVBUF, 65535)
+                .childOption(ChannelOption.SO_SNDBUF, 65535)
                 .localAddress(new InetSocketAddress(this.port))
                 .childHandler(new ChannelInitializer<SocketChannel>() {
                     @Override
@@ -64,8 +64,6 @@ public class NettyServer implements LifeCycle {
                                 .addLast(new HttpServerCodec())
                                 .addLast(new HttpObjectAggregator(baseConfig.getMaxContentLength()))
                                 .addLast(new HttpServerExpectContinueHandler())
-                                .addLast(new HttpRequestDecoder())
-                                .addLast(new HttpResponseEncoder())
                                 .addLast(new NettyHttpConnectionHandler())
                                 .addLast(new NettyHttpServerHandler());
                     }
