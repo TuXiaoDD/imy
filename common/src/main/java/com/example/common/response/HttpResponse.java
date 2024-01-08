@@ -14,7 +14,7 @@ import java.util.Optional;
 @NoArgsConstructor
 @Getter
 @Setter
-public class Response<T> implements Serializable {
+public class HttpResponse<T> implements Serializable {
 
     /**
      * 状态码
@@ -32,23 +32,23 @@ public class Response<T> implements Serializable {
     private String msg;
 
 
-    private Response(IResultCode resultCode) {
+    private HttpResponse(IResultCode resultCode) {
         this(resultCode, null, resultCode.getMessage());
     }
 
-    private Response(IResultCode resultCode, String msg) {
+    private HttpResponse(IResultCode resultCode, String msg) {
         this(resultCode, null, msg);
     }
 
-    private Response(IResultCode resultCode, T data) {
+    private HttpResponse(IResultCode resultCode, T data) {
         this(resultCode, data, resultCode.getMessage());
     }
 
-    private Response(IResultCode resultCode, T data, String msg) {
+    private HttpResponse(IResultCode resultCode, T data, String msg) {
         this(resultCode.getCode(), data, msg);
     }
 
-    private Response(Integer code, T data, String msg) {
+    private HttpResponse(Integer code, T data, String msg) {
         this.code = code;
         this.data = data;
         this.msg = msg;
@@ -60,14 +60,14 @@ public class Response<T> implements Serializable {
      * @param result
      * @return
      */
-    public static boolean isSuccess(Response<?> result) {
+    public static boolean isSuccess(HttpResponse<?> result) {
         return Optional.ofNullable(result)
                 .map(x -> Objects.equals(ResultCode.SUCCESS.getCode(), x.code))
                 .orElse(Boolean.FALSE);
     }
 
-    public static <T> Response<T> success(T data) {
-        return new Response<>(ResultCode.SUCCESS, data);
+    public static <T> HttpResponse<T> success(T data) {
+        return new HttpResponse<>(ResultCode.SUCCESS, data);
     }
 
     /**
@@ -83,8 +83,8 @@ public class Response<T> implements Serializable {
         return this.data;
     }
 
-    private boolean isBizException(Response<T> response) {
-        return Optional.ofNullable(response)
+    private boolean isBizException(HttpResponse<T> httpResponse) {
+        return Optional.ofNullable(httpResponse)
                 .map(x -> Objects.equals(ResultCode.BIZ_EXCEPTION.getCode(), x.code))
                 .orElse(Boolean.FALSE);
     }
@@ -95,8 +95,8 @@ public class Response<T> implements Serializable {
      * @param result
      * @return
      */
-    public static boolean isNotSuccess(Response<?> result) {
-        return !Response.isSuccess(result);
+    public static boolean isNotSuccess(HttpResponse<?> result) {
+        return !HttpResponse.isSuccess(result);
     }
 
     /**
@@ -107,7 +107,7 @@ public class Response<T> implements Serializable {
      * @param <T>  T 泛型标记
      * @return R
      */
-    public static <T extends Serializable> Response<T> data(T data, String msg) {
+    public static <T extends Serializable> HttpResponse<T> data(T data, String msg) {
         return data(HttpServletResponse.SC_OK, data, msg);
     }
 
@@ -120,16 +120,16 @@ public class Response<T> implements Serializable {
      * @param <T>  T 泛型标记
      * @return R
      */
-    public static <T extends Serializable> Response<T> data(Integer code, T data, String msg) {
-        return new Response<>(code, data, data == null ? "no data" : msg);
+    public static <T extends Serializable> HttpResponse<T> data(Integer code, T data, String msg) {
+        return new HttpResponse<>(code, data, data == null ? "no data" : msg);
     }
 
-    public static <T> Response<T> fail(IResultCode resultCode, String msg) {
-        return new Response<>(resultCode, msg);
+    public static <T> HttpResponse<T> fail(IResultCode resultCode, String msg) {
+        return new HttpResponse<>(resultCode, msg);
     }
 
-    public static <T> Response<T> fail(IResultCode resultCode) {
-        return new Response<>(resultCode, resultCode.getMessage());
+    public static <T> HttpResponse<T> fail(IResultCode resultCode) {
+        return new HttpResponse<>(resultCode, resultCode.getMessage());
     }
 
     /**
@@ -139,8 +139,8 @@ public class Response<T> implements Serializable {
      * @param <T> T 泛型标记
      * @return R
      */
-    public static <T> Response<T> fail(String msg) {
-        return new Response<>(ResultCode.FAILURE, msg);
+    public static <T> HttpResponse<T> fail(String msg) {
+        return new HttpResponse<>(ResultCode.FAILURE, msg);
     }
 
 

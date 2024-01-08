@@ -22,6 +22,7 @@
         <module>common</module>
         <module>im-server</module>
         <module>im-tcp</module>
+        <module>im-client</module>
     </modules>
 
     <properties>
@@ -148,6 +149,11 @@
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-lang3</artifactId>
                 <version>3.10</version>
+            </dependency>
+            <dependency>
+                <groupId>org.example</groupId>
+                <artifactId>common</artifactId>
+                <version>1.0.0</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

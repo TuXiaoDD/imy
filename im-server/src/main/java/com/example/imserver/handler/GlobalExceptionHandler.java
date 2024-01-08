@@ -2,7 +2,7 @@ package com.example.imserver.handler;
 
 
 import com.example.common.exception.BizException;
-import com.example.common.response.Response;
+import com.example.common.response.HttpResponse;
 import com.example.common.response.ResultCode;
 
 import org.springframework.http.HttpStatus;
@@ -26,8 +26,8 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ResponseBody
-    public Response<?> defaultExceptionHandler(Exception e) {
-        return Response.fail(ResultCode.INTERNAL_SERVER_ERROR, e.getMessage());
+    public HttpResponse<?> defaultExceptionHandler(Exception e) {
+        return HttpResponse.fail(ResultCode.INTERNAL_SERVER_ERROR, e.getMessage());
     }
 
 
@@ -36,8 +36,8 @@ public class GlobalExceptionHandler {
      */
     @ResponseBody
     @ExceptionHandler(BizException.class)
-    public Response<?> bizExceptionHandle(BizException bizException) {
-        return Response.fail(bizException.getCode(), bizException.getMessage());
+    public HttpResponse<?> bizExceptionHandle(BizException bizException) {
+        return HttpResponse.fail(bizException.getCode(), bizException.getMessage());
     }
 
     /**
@@ -48,8 +48,8 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseBody
-    public Response<?> methodArgumentNotValidExceptionHandler(MethodArgumentNotValidException e) {
-        return Response.fail(ResultCode.PARAM_BIND_ERROR);
+    public HttpResponse<?> methodArgumentNotValidExceptionHandler(MethodArgumentNotValidException e) {
+        return HttpResponse.fail(ResultCode.PARAM_BIND_ERROR);
     }
 
     /**
@@ -60,8 +60,8 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     @ResponseBody
-    public Response<?> methodArgumentTypeMismatchExceptionHandler(MethodArgumentTypeMismatchException e) {
-        return Response.fail(ResultCode.PARAM_MISS);
+    public HttpResponse<?> methodArgumentTypeMismatchExceptionHandler(MethodArgumentTypeMismatchException e) {
+        return HttpResponse.fail(ResultCode.PARAM_MISS);
     }
 
     /**
@@ -72,8 +72,8 @@ public class GlobalExceptionHandler {
      */
     @ResponseBody
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
-    public Response<?> argumentMissingError(HttpRequestMethodNotSupportedException ex) {
-        return Response.fail(ResultCode.METHOD_NOT_SUPPORTED);
+    public HttpResponse<?> argumentMissingError(HttpRequestMethodNotSupportedException ex) {
+        return HttpResponse.fail(ResultCode.METHOD_NOT_SUPPORTED);
     }
 
 }

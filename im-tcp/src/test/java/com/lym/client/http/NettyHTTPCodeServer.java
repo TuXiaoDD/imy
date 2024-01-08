@@ -1,9 +1,6 @@
 package com.lym.client.http;
 
-import com.imtcp.LifeCycle;
-import com.imtcp.config.BaseConfig;
 
-import com.lym.client.echo.EchoServer;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
@@ -14,14 +11,18 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.ByteToMessageDecoder;
-import io.netty.handler.codec.http.*;
+import io.netty.handler.codec.MessageToMessageDecoder;
+import io.netty.handler.codec.http.HttpObjectAggregator;
+import io.netty.handler.codec.http.HttpRequestDecoder;
+import io.netty.handler.codec.http.HttpServerCodec;
+import io.netty.handler.codec.http.HttpServerExpectContinueHandler;
 import lombok.extern.slf4j.Slf4j;
 
 import java.net.InetSocketAddress;
 import java.util.List;
 
 @Slf4j
-public class NettyHTTPServer {
+public class NettyHTTPCodeServer {
 
     private int port = 9999;
 
@@ -31,7 +32,7 @@ public class NettyHTTPServer {
     private EventLoopGroup workEventLoopGroup;
 
 
-    public NettyHTTPServer() {
+    public NettyHTTPCodeServer() {
         init();
     }
 
@@ -42,7 +43,7 @@ public class NettyHTTPServer {
     }
 
     public static void main(String[] args) {
-        new NettyHTTPServer().start();
+        new NettyHTTPCodeServer().start();
     }
 
     public void start() {
@@ -59,12 +60,10 @@ public class NettyHTTPServer {
                     @Override
                     protected void initChannel(SocketChannel socketChannel) throws Exception {
                         socketChannel.pipeline()
-                                .addLast(new HttpServerCodec())
-                                .addLast(new HttpObjectAggregator(65535))
-                                .addLast(new HttpServerExpectContinueHandler())
+                                .addLast(new MyByteToMessageDecoder())
 //                                .addLast(new NettyHttpConnectionHandler())
 //                                .addLast(new NettyHttpServerHandler())
-                        ;
+                                ;
                     }
                 });
         try {
@@ -79,10 +78,15 @@ public class NettyHTTPServer {
 
 
     @Slf4j
-    public static class MyByteToMessageDecoder extends HttpRequestDecoder {
+    public static class MyByteToMessageDecoder extends ByteToMessageDecoder {
 
 
-
+        @Override
+        protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
+            byte[] bytes = new byte[in.readableBytes()];
+            in.readBytes(bytes);
+            System.out.println(new String(bytes));
+        }
     }
 
     public void shutdown() {

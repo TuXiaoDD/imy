@@ -13,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.nio.charset.StandardCharsets;
 
 @Slf4j
-public class NettyHttpConnectionHandler extends ChannelInboundHandlerAdapter {
+public class NettyConnectionHandler extends ChannelInboundHandlerAdapter {
 
 
     public void channelRegistered(ChannelHandlerContext ctx) throws Exception {

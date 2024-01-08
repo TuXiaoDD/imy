@@ -1,11 +1,18 @@
-package com.imtcp.pack;
+package com.lym;
 
-import com.imtcp.pack.enums.ClientType;
-import com.imtcp.pack.enums.CodeType;
+import com.example.common.enums.ClientType;
+import com.example.common.enums.CodeType;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
-public class MessageHeader {
+@AllArgsConstructor
+public class Message {
+
+    /**
+     * 请求头长度
+     */
+    private Integer headerLength;
     /**
      * appId
      */
@@ -20,18 +27,20 @@ public class MessageHeader {
     private Integer command;
     /**
      * 客户端类型
+     *
      * @see ClientType
      */
     private Integer clientType;
     /**
      * 解析方式
+     *
      * @see CodeType
      */
     private Integer codeType;
     /**
      * 消息内容长度 必须填
      */
-    private int length;
+    private Integer bodyLength;
 
-
+    private byte[] body;
 }

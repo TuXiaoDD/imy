@@ -1,6 +1,6 @@
 package com.example.imserver.handler;
 
-import com.example.common.response.Response;
+import com.example.common.response.HttpResponse;
 
 import com.example.common.utils.DataUtils;
 import org.springframework.core.MethodParameter;
@@ -28,7 +28,7 @@ public class ResponseHanlder implements ResponseBodyAdvice<Object> {
                 || Objects.equals(returnType.getMethod().getName(), "error")) {
             return body;
         }
-        return Response.success(body);
+        return HttpResponse.success(body);
     }
 
 }

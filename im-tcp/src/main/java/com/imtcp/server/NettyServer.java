@@ -2,8 +2,10 @@ package com.imtcp.server;
 
 import com.imtcp.LifeCycle;
 import com.imtcp.config.BaseConfig;
-import com.imtcp.handler.NettyHttpConnectionHandler;
-import com.imtcp.handler.NettyHttpServerHandler;
+
+import com.imtcp.handler.MessageDecoder;
+import com.imtcp.handler.NettyConnectionHandler;
+import com.imtcp.handler.NettyServerHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
@@ -61,11 +63,9 @@ public class NettyServer implements LifeCycle {
                     @Override
                     protected void initChannel(SocketChannel socketChannel) throws Exception {
                         socketChannel.pipeline()
-                                .addLast(new HttpServerCodec())
-                                .addLast(new HttpObjectAggregator(baseConfig.getMaxContentLength()))
-                                .addLast(new HttpServerExpectContinueHandler())
-                                .addLast(new NettyHttpConnectionHandler())
-                                .addLast(new NettyHttpServerHandler());
+//                                .addLast(new MessageDecoder())
+                                .addLast(new NettyConnectionHandler())
+                                .addLast(new NettyServerHandler());
                     }
                 });
         try {

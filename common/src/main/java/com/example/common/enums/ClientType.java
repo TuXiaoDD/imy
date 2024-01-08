@@ -1,4 +1,4 @@
-package com.imtcp.pack.enums;
+package com.example.common.enums;
 
 public enum ClientType {
 
