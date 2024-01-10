@@ -3,6 +3,7 @@ package com.lym;
 
 import com.example.common.enums.ClientType;
 import com.example.common.enums.CodeType;
+import com.example.common.netty.Message;
 import com.example.common.netty.Request;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.ByteBuf;
@@ -12,7 +13,9 @@ import io.netty.buffer.PooledByteBufAllocator;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.handler.codec.ByteToMessageDecoder;
 import io.netty.handler.codec.MessageToByteEncoder;
+import io.netty.util.ReferenceCountUtil;
 import lombok.extern.slf4j.Slf4j;
 
 import java.nio.charset.StandardCharsets;
@@ -31,9 +34,8 @@ public class EchoClient {
                     @Override
                     protected void initChannel(NioSocketChannel ch) throws Exception {
                         ch.pipeline()
-//                                .addLast(new StringEncoder())
-//                                .addLast(new StringDecoder())
                                 .addLast(new MyMessageToByteEncoder())
+                                .addLast(new MyMessageDecoder())
                                 .addLast(new EchoHandler());
                     }
                 }).connect("localhost", 9999);
@@ -51,7 +53,7 @@ public class EchoClient {
                     Integer codeType = 1;
                     Integer bodyLength = 5;
                     byte[] body = "hello".getBytes();
-                    Message message = new Message(headerLength, appId, version, command, clientType, codeType, bodyLength, body);
+                    Request message = new Request(headerLength, appId, version, command, clientType, codeType, bodyLength, body);
                     channel.writeAndFlush(message);
                 }
             }).channel().closeFuture().sync();
@@ -80,15 +82,22 @@ public class EchoClient {
 //            }
 
 
-
         }
 
         @Override
         public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-            ByteBuf byteBuf = (ByteBuf) msg;
-            byte[] bytes = ByteBufUtil.getBytes(byteBuf);
+            Message message = (Message) msg;
+            log.info("read {}", new String(message.getBody()));
+        }
+    }
 
-            log.info("EchoHandler channelRead msg {}", new String(bytes));
+    public static class MyMessageDecoder extends ByteToMessageDecoder {
+        @Override
+        protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
+            Message message = new Message(in);
+            ReferenceCountUtil.retain(in);
+            out.add(message);
+
         }
     }
 
@@ -102,6 +111,7 @@ public class EchoClient {
             out.writeInt(msg.getCommand());
             out.writeInt(msg.getClientType());
             out.writeInt(msg.getCodeType());
+            out.writeInt(msg.getMessageType());
             out.writeInt(msg.getBodyLength());
             out.writeBytes(msg.getBody());
 
