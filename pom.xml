@@ -23,6 +23,7 @@
         <module>im-server</module>
         <module>im-tcp</module>
         <module>im-client</module>
+        <module>im-dispatcher</module>
     </modules>
 
     <properties>

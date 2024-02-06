@@ -1,6 +1,7 @@
 package com.imtcp.handler;
 
 import com.example.common.utils.RemotingUtil;
+import com.imtcp.context.SessionManager;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.Channel;
@@ -32,6 +33,12 @@ public class NettyConnectionHandler extends ChannelInboundHandlerAdapter {
 
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
         log.info("NettyHttpConnectionHandler channelInactive {}", RemotingUtil.getLocalAddress());
+        // todo uid
+        Long uid = RemotingUtil.getUid(ctx.channel());
+        if (uid != null) {
+            SessionManager.removeSession(uid);
+        }
+
     }
 
     public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {

@@ -215,5 +215,7 @@ public class RemotingUtil {
         return null;
     }
 
-
+    public static Long getUid(Channel channel) {
+        return null;
+    }
 }
