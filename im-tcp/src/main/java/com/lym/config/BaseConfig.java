@@ -1,4 +1,4 @@
-package com.imtcp.config;
+package com.lym.config;
 
 import lombok.Data;
 

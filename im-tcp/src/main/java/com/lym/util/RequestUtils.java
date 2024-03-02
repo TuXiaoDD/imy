@@ -1,9 +1,7 @@
-package com.imtcp.util;
+package com.lym.util;
 
 
 import io.netty.handler.codec.http.FullHttpRequest;
-import io.netty.handler.codec.http.HttpHeaders;
-import io.netty.handler.codec.http.HttpMethod;
 import io.netty.handler.codec.http.multipart.DefaultHttpDataFactory;
 import io.netty.handler.codec.http.multipart.HttpPostRequestDecoder;
 import io.netty.handler.codec.http.multipart.InterfaceHttpData;

@@ -1,17 +1,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <groupId>com.lym</groupId>
-        <artifactId>im</artifactId>
-        <version>1.0.0</version>
-    </parent>
 
     <groupId>com.lym</groupId>
-    <artifactId>im-client</artifactId>
+    <artifactId>im-dispatcher</artifactId>
+    <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>im-client</name>
+    <name>im-dispatcher</name>
     <url>http://maven.apache.org</url>
 
     <properties>
@@ -25,13 +21,21 @@
             <version>3.8.1</version>
             <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>com.lym</groupId>
             <artifactId>common</artifactId>
+            <version>1.0.0</version>
         </dependency>
         <dependency>
             <groupId>io.netty</groupId>
             <artifactId>netty-all</artifactId>
+            <version>4.1.39.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.26</version>
         </dependency>
     </dependencies>
 </project>

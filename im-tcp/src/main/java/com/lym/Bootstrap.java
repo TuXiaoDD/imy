@@ -1,9 +1,9 @@
-package com.imtcp;
+package com.lym;
 
 
-import com.imtcp.config.BaseConfig;
-import com.imtcp.config.ConfigLoader;
-import com.imtcp.server.NettyServer;
+import com.lym.config.BaseConfig;
+import com.lym.config.ConfigLoader;
+import com.lym.server.NettyServer;
 
 public class Bootstrap {
     public static void main(String[] args) {

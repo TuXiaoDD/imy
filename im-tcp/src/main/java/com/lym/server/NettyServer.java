@@ -1,12 +1,10 @@
-package com.imtcp.server;
+package com.lym.server;
 
-import com.imtcp.LifeCycle;
-import com.imtcp.config.BaseConfig;
+import com.example.common.LifeCycle;
+import com.lym.config.BaseConfig;
 
-import com.imtcp.handler.MessageDecoder;
-import com.imtcp.handler.MessageEncoder;
-import com.imtcp.handler.NettyConnectionHandler;
-import com.imtcp.handler.NettyServerHandler;
+import com.lym.handler.NettyConnectionHandler;
+import com.lym.handler.NettyServerHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
@@ -14,9 +12,6 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.handler.codec.http.*;
-import io.netty.handler.codec.string.StringDecoder;
-import io.netty.handler.codec.string.StringEncoder;
 import lombok.extern.slf4j.Slf4j;
 
 import java.net.InetSocketAddress;
@@ -64,8 +59,8 @@ public class NettyServer implements LifeCycle {
                     @Override
                     protected void initChannel(SocketChannel socketChannel) throws Exception {
                         socketChannel.pipeline()
-                                .addLast(new MessageDecoder())
-                                .addLast(new MessageEncoder())
+//                                .addLast(new MessageDecoder())
+//                                .addLast(new MessageEncoder())
                                 .addLast(new NettyConnectionHandler())
                                 .addLast(new NettyServerHandler());
                     }

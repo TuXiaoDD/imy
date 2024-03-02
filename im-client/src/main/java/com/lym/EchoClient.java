@@ -87,6 +87,8 @@ public class EchoClient {
         @Override
         public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
             Message message = (Message) msg;
+//            ByteBuf byteBuf=(ByteBuf)msg;
+//            Message message =new Message(byteBuf);
             log.info("read {}", new String(message.getBody()));
         }
     }

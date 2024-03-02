@@ -1,4 +1,4 @@
-package com.imtcp.config;
+package com.lym.config;
 
 import com.example.common.utils.PropertiesUtils;
 import lombok.extern.slf4j.Slf4j;

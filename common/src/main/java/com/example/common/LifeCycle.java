@@ -1,4 +1,4 @@
-package com.imtcp;
+package com.example.common;
 
 public interface LifeCycle {
     void init();
