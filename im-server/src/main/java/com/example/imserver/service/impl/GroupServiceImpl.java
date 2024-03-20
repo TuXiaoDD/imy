@@ -1,5 +1,6 @@
 package com.example.imserver.service.impl;
 
+import com.example.common.utils.Assert;
 import com.example.imserver.controller.dto.group.GroupCreateDTO;
 import com.example.imserver.controller.dto.group.GroupListDTO;
 import com.example.imserver.controller.vo.group.GroupListVO;

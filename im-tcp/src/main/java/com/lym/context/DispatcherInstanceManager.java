@@ -18,7 +18,8 @@ public class DispatcherInstanceManager {
         return instance;
     }
 
-    private List<DispatcherInstance> dispatcherInstanceList = List.of(new DispatcherInstance("localhost", "127.0.0.1", 9000));
+    private List<DispatcherInstance> dispatcherInstanceList
+            = List.of(new DispatcherInstance("localhost", "127.0.0.1", 9000));
 
     private List<SocketChannel> socketChannels = new CopyOnWriteArrayList<>();
 

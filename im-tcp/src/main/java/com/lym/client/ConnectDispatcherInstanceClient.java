@@ -59,7 +59,7 @@ public class ConnectDispatcherInstanceClient implements LifeCycle {
                             }
                         }
                     }).channel().closeFuture()
-                    .sync()
+//                    .sync()
             ;
         } catch (Exception e) {
             log.error(e.getMessage());

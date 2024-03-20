@@ -1,8 +1,6 @@
 package com.example.common.netty;
 
 import com.example.common.constants.Constants;
-import com.example.common.enums.ClientType;
-import com.example.common.enums.CodeType;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import lombok.Data;
@@ -14,35 +12,21 @@ public class Message {
     /**
      * 请求头长度
      */
-    private int headerLength;
+    protected int headerLength;
+
     /**
-     * appId
+     * 客户端版本号
      */
-    protected Integer appId;
+    protected int appSdkVersion;
     /**
-     * 版本号
+     * 请求类型 requestType
      */
-    protected Integer version;
+    protected int requestType;
     /**
-     * 命令
-     */
-    protected Integer command;
-    /**
-     * 客户端类型
+     * 请求顺序
      *
-     * @see ClientType
      */
-    protected Integer clientType;
-    /**
-     * 解析方式
-     *
-     * @see CodeType
-     */
-    protected Integer codeType;
-    /**
-     * 消息类型：0 请求；1 响应
-     */
-    protected Integer messageType;
+    protected int sequence;
 
     /**
      * 消息内容长度 必须填
@@ -62,12 +46,9 @@ public class Message {
 
     public Message(ByteBuf byteBuf) {
         this.headerLength = byteBuf.readInt();
-        this.appId = byteBuf.readInt();
-        this.version = byteBuf.readInt();
-        this.command = byteBuf.readInt();
-        this.clientType = byteBuf.readInt();
-        this.codeType = byteBuf.readInt();
-        this.messageType = byteBuf.readInt();
+        this.appSdkVersion = byteBuf.readInt();
+        this.requestType = byteBuf.readInt();
+        this.sequence = byteBuf.readInt();
         this.bodyLength = byteBuf.readInt();
         int readableBytes = byteBuf.readableBytes();
 
@@ -89,27 +70,25 @@ public class Message {
         this.byteBuf=byteBuf;
     }
 
-    public Message(int headerLength, Integer appId, Integer version, Integer command, Integer clientType, Integer messageType, Integer codeType, int bodyLength, byte[] body) {
+    public Message(int headerLength,
+                   int appSdkVersion,
+                   int requestType,
+                   int sequence,
+                   int bodyLength,
+                   byte[] body) {
         this.headerLength = headerLength;
-        this.appId = appId;
-        this.version = version;
-        this.command = command;
-        this.clientType = clientType;
-        this.codeType = codeType;
-        this.messageType = messageType;
-
+        this.appSdkVersion = appSdkVersion;
+        this.requestType = requestType;
+        this.sequence = sequence;
         this.bodyLength = bodyLength;
         this.body = body;
 
         // 写进byteBuf
         this.byteBuf = Unpooled.buffer(Constants.headLengthLength + headerLength + Constants.bodyLengthLength + bodyLength);
         byteBuf.writeInt(headerLength);
-        byteBuf.writeInt(appId);
-        byteBuf.writeInt(version);
-        byteBuf.writeInt(command);
-        byteBuf.writeInt(clientType);
-        byteBuf.writeInt(codeType);
-        byteBuf.writeInt(messageType);
+        byteBuf.writeInt(appSdkVersion);
+        byteBuf.writeInt(requestType);
+        byteBuf.writeInt(sequence);
         byteBuf.writeInt(bodyLength);
         byteBuf.writeBytes(body);
     }

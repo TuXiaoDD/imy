@@ -17,7 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.net.InetSocketAddress;
 
 @Slf4j
-public class NettyServer implements LifeCycle {
+public class GatewayTcpServer implements LifeCycle {
 
     private int port = 9999;
     private BaseConfig baseConfig;
@@ -27,7 +27,7 @@ public class NettyServer implements LifeCycle {
     private EventLoopGroup bossEventLoopGroup;
     private EventLoopGroup workEventLoopGroup;
 
-    public NettyServer(BaseConfig baseConfig) {
+    public GatewayTcpServer(BaseConfig baseConfig) {
         this.baseConfig = baseConfig;
         if (this.baseConfig.getPort() > 0 && this.baseConfig.getPort() < 65535) {
             this.port = this.baseConfig.getPort();

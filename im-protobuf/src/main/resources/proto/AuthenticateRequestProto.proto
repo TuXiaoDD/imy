@@ -1,0 +1,16 @@
+
+syntax = "proto3";
+
+package com.lym.protobuf;
+
+option java_package="com.lym.protobuf";
+
+option java_outer_classname="AuthenticateRequestProto";
+
+message AuthenticateRequest{
+  string uid=1;
+  string toke=2;
+  int64 timestamp=3;
+}
+
+
