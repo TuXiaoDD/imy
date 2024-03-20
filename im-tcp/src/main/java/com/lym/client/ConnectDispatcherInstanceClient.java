@@ -1,8 +1,7 @@
 package com.lym.client;
 
 import com.example.common.LifeCycle;
-import com.lym.entity.DispatcherInstance;
-import com.lym.handler.ConnectDispatcherInstanceClientHandler;
+import com.lym.entity.DispatcherInstanceInfo;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -14,13 +13,13 @@ import lombok.extern.slf4j.Slf4j;
 public class ConnectDispatcherInstanceClient implements LifeCycle {
 
 
-    private final DispatcherInstance dispatcherInstance;
+    private final DispatcherInstanceInfo dispatcherInstanceInfo;
     private Bootstrap bootstrap;
     private EventLoopGroup eventLoopGroup;
     private SocketChannel socketChannel;
 
-    public ConnectDispatcherInstanceClient(DispatcherInstance instance) {
-        this.dispatcherInstance = instance;
+    public ConnectDispatcherInstanceClient(DispatcherInstanceInfo instance) {
+        this.dispatcherInstanceInfo = instance;
         init();
     }
 
@@ -45,7 +44,7 @@ public class ConnectDispatcherInstanceClient implements LifeCycle {
                     protected void initChannel(SocketChannel socketChannel) throws Exception {
                         socketChannel.pipeline().addLast(new ConnectDispatcherInstanceClientHandler());
                     }
-                }).connect(this.dispatcherInstance.getHost(), this.dispatcherInstance.getPort());
+                }).connect(this.dispatcherInstanceInfo.getHost(), this.dispatcherInstanceInfo.getPort());
         try {
             channelFuture.addListener(new ChannelFutureListener() {
                         @Override

@@ -1,4 +1,4 @@
-package com.lym.handler;
+package com.lym.client;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandler;

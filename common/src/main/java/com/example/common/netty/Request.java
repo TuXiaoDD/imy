@@ -12,8 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Data
 @Slf4j
-public class Request{
-
+public class Request {
 
 
     /**
@@ -31,7 +30,6 @@ public class Request{
     protected int requestType;
     /**
      * 请求顺序
-     *
      */
     protected int sequence;
 
@@ -45,6 +43,7 @@ public class Request{
      * 记录完整的消息
      */
     protected ByteBuf byteBuf;
+
     public Request(int headerLength,
                    int appSdkVersion,
                    int requestType,
@@ -57,6 +56,14 @@ public class Request{
         this.sequence = sequence;
         this.bodyLength = bodyLength;
         this.body = body;
+
+        this.byteBuf = Unpooled.buffer(Constants.headLengthLength + headerLength + Constants.bodyLengthLength + bodyLength);
+        byteBuf.writeInt(headerLength);
+        byteBuf.writeInt(appSdkVersion);
+        byteBuf.writeInt(requestType);
+        byteBuf.writeInt(sequence);
+        byteBuf.writeInt(bodyLength);
+        byteBuf.writeBytes(body);
 
     }
 
@@ -82,6 +89,6 @@ public class Request{
         byteBuf.readBytes(bytes);
         this.body = bytes;
         byteBuf.resetReaderIndex();
-        this.byteBuf=byteBuf;
+        this.byteBuf = byteBuf;
     }
 }

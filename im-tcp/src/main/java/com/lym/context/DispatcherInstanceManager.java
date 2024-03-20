@@ -2,9 +2,9 @@ package com.lym.context;
 
 import com.lym.client.ConnectDispatcherInstanceClient;
 import com.lym.entity.DispatcherInstance;
+import com.lym.entity.DispatcherInstanceInfo;
 import io.netty.channel.socket.SocketChannel;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -18,18 +18,27 @@ public class DispatcherInstanceManager {
         return instance;
     }
 
-    private List<DispatcherInstance> dispatcherInstanceList
-            = List.of(new DispatcherInstance("localhost", "127.0.0.1", 9000));
+    private List<DispatcherInstanceInfo> dispatcherInstanceInfoList
+            = List.of(new DispatcherInstanceInfo("localhost", "127.0.0.1", 9000));
 
-    private List<SocketChannel> socketChannels = new CopyOnWriteArrayList<>();
+    private List<DispatcherInstance> dispatcherInstanceList = new CopyOnWriteArrayList<>();
 
     public void connectDispatcherInstances() {
-        if (dispatcherInstanceList == null) return;
-        for (DispatcherInstance instance : dispatcherInstanceList) {
+        if (dispatcherInstanceInfoList == null) return;
+        for (DispatcherInstanceInfo instance : dispatcherInstanceInfoList) {
             ConnectDispatcherInstanceClient connectDispatcherInstanceClient = new ConnectDispatcherInstanceClient(instance);
             connectDispatcherInstanceClient.start();
-            socketChannels.add(connectDispatcherInstanceClient.getSocketChannel());
+            SocketChannel socketChannel = connectDispatcherInstanceClient.getSocketChannel();
+            if (socketChannel==null){
+                //todo handler err
+                continue;
+            }
+            dispatcherInstanceList.add(new DispatcherInstance(socketChannel));
         }
+    }
+
+    public DispatcherInstance chooseInstance(){
+        return dispatcherInstanceList.get(0);
     }
 
 }

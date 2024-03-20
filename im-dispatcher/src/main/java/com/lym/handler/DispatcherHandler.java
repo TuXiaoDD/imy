@@ -1,22 +1,17 @@
 package com.lym.handler;
 
+import com.example.common.netty.Request;
 import com.lym.context.GatewayManager;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandler;
+import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.channel.socket.SocketChannel;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class DispatcherHandler implements ChannelInboundHandler {
+public class DispatcherHandler extends ChannelInboundHandlerAdapter {
 
-    public void channelRegistered(ChannelHandlerContext channelHandlerContext) throws Exception {
-
-    }
-
-    public void channelUnregistered(ChannelHandlerContext channelHandlerContext) throws Exception {
-
-    }
 
     public void channelActive(ChannelHandlerContext channelHandlerContext) throws Exception {
         GatewayManager gatewayManager = GatewayManager.getInstance();
@@ -34,6 +29,7 @@ public class DispatcherHandler implements ChannelInboundHandler {
     }
 
     public void channelRead(ChannelHandlerContext channelHandlerContext, Object o) throws Exception {
+
 
     }
 
