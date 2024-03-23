@@ -19,27 +19,47 @@ public final class AuthenticateResponseProto {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>string uid = 1;</code>
+     * <code>int32 status = 1;</code>
+     */
+    int getStatus();
+
+    /**
+     * <code>int64 errorCode = 2;</code>
+     */
+    long getErrorCode();
+
+    /**
+     * <code>string errorMessage = 3;</code>
+     */
+    java.lang.String getErrorMessage();
+    /**
+     * <code>string errorMessage = 3;</code>
+     */
+    com.google.protobuf.ByteString
+        getErrorMessageBytes();
+
+    /**
+     * <code>string uid = 4;</code>
      */
     java.lang.String getUid();
     /**
-     * <code>string uid = 1;</code>
+     * <code>string uid = 4;</code>
      */
     com.google.protobuf.ByteString
         getUidBytes();
 
     /**
-     * <code>string toke = 2;</code>
+     * <code>string toke = 5;</code>
      */
     java.lang.String getToke();
     /**
-     * <code>string toke = 2;</code>
+     * <code>string toke = 5;</code>
      */
     com.google.protobuf.ByteString
         getTokeBytes();
 
     /**
-     * <code>int64 timestamp = 3;</code>
+     * <code>int64 timestamp = 6;</code>
      */
     long getTimestamp();
   }
@@ -56,6 +76,9 @@ public final class AuthenticateResponseProto {
       super(builder);
     }
     private AuthenticateResponse() {
+      status_ = 0;
+      errorCode_ = 0L;
+      errorMessage_ = "";
       uid_ = "";
       toke_ = "";
       timestamp_ = 0L;
@@ -92,19 +115,35 @@ public final class AuthenticateResponseProto {
               }
               break;
             }
-            case 10: {
+            case 8: {
+
+              status_ = input.readInt32();
+              break;
+            }
+            case 16: {
+
+              errorCode_ = input.readInt64();
+              break;
+            }
+            case 26: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              errorMessage_ = s;
+              break;
+            }
+            case 34: {
               java.lang.String s = input.readStringRequireUtf8();
 
               uid_ = s;
               break;
             }
-            case 18: {
+            case 42: {
               java.lang.String s = input.readStringRequireUtf8();
 
               toke_ = s;
               break;
             }
-            case 24: {
+            case 48: {
 
               timestamp_ = input.readInt64();
               break;
@@ -133,10 +172,62 @@ public final class AuthenticateResponseProto {
               com.lym.protobuf.AuthenticateResponseProto.AuthenticateResponse.class, com.lym.protobuf.AuthenticateResponseProto.AuthenticateResponse.Builder.class);
     }
 
-    public static final int UID_FIELD_NUMBER = 1;
+    public static final int STATUS_FIELD_NUMBER = 1;
+    private int status_;
+    /**
+     * <code>int32 status = 1;</code>
+     */
+    public int getStatus() {
+      return status_;
+    }
+
+    public static final int ERRORCODE_FIELD_NUMBER = 2;
+    private long errorCode_;
+    /**
+     * <code>int64 errorCode = 2;</code>
+     */
+    public long getErrorCode() {
+      return errorCode_;
+    }
+
+    public static final int ERRORMESSAGE_FIELD_NUMBER = 3;
+    private volatile java.lang.Object errorMessage_;
+    /**
+     * <code>string errorMessage = 3;</code>
+     */
+    public java.lang.String getErrorMessage() {
+      java.lang.Object ref = errorMessage_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        errorMessage_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string errorMessage = 3;</code>
+     */
+    public com.google.protobuf.ByteString
+        getErrorMessageBytes() {
+      java.lang.Object ref = errorMessage_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        errorMessage_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int UID_FIELD_NUMBER = 4;
     private volatile java.lang.Object uid_;
     /**
-     * <code>string uid = 1;</code>
+     * <code>string uid = 4;</code>
      */
     public java.lang.String getUid() {
       java.lang.Object ref = uid_;
@@ -151,7 +242,7 @@ public final class AuthenticateResponseProto {
       }
     }
     /**
-     * <code>string uid = 1;</code>
+     * <code>string uid = 4;</code>
      */
     public com.google.protobuf.ByteString
         getUidBytes() {
@@ -167,10 +258,10 @@ public final class AuthenticateResponseProto {
       }
     }
 
-    public static final int TOKE_FIELD_NUMBER = 2;
+    public static final int TOKE_FIELD_NUMBER = 5;
     private volatile java.lang.Object toke_;
     /**
-     * <code>string toke = 2;</code>
+     * <code>string toke = 5;</code>
      */
     public java.lang.String getToke() {
       java.lang.Object ref = toke_;
@@ -185,7 +276,7 @@ public final class AuthenticateResponseProto {
       }
     }
     /**
-     * <code>string toke = 2;</code>
+     * <code>string toke = 5;</code>
      */
     public com.google.protobuf.ByteString
         getTokeBytes() {
@@ -201,10 +292,10 @@ public final class AuthenticateResponseProto {
       }
     }
 
-    public static final int TIMESTAMP_FIELD_NUMBER = 3;
+    public static final int TIMESTAMP_FIELD_NUMBER = 6;
     private long timestamp_;
     /**
-     * <code>int64 timestamp = 3;</code>
+     * <code>int64 timestamp = 6;</code>
      */
     public long getTimestamp() {
       return timestamp_;
@@ -222,14 +313,23 @@ public final class AuthenticateResponseProto {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
+      if (status_ != 0) {
+        output.writeInt32(1, status_);
+      }
+      if (errorCode_ != 0L) {
+        output.writeInt64(2, errorCode_);
+      }
+      if (!getErrorMessageBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, errorMessage_);
+      }
       if (!getUidBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, uid_);
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 4, uid_);
       }
       if (!getTokeBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, toke_);
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 5, toke_);
       }
       if (timestamp_ != 0L) {
-        output.writeInt64(3, timestamp_);
+        output.writeInt64(6, timestamp_);
       }
       unknownFields.writeTo(output);
     }
@@ -239,15 +339,26 @@ public final class AuthenticateResponseProto {
       if (size != -1) return size;
 
       size = 0;
+      if (status_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(1, status_);
+      }
+      if (errorCode_ != 0L) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(2, errorCode_);
+      }
+      if (!getErrorMessageBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, errorMessage_);
+      }
       if (!getUidBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, uid_);
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, uid_);
       }
       if (!getTokeBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, toke_);
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, toke_);
       }
       if (timestamp_ != 0L) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt64Size(3, timestamp_);
+          .computeInt64Size(6, timestamp_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -265,6 +376,12 @@ public final class AuthenticateResponseProto {
       com.lym.protobuf.AuthenticateResponseProto.AuthenticateResponse other = (com.lym.protobuf.AuthenticateResponseProto.AuthenticateResponse) obj;
 
       boolean result = true;
+      result = result && (getStatus()
+          == other.getStatus());
+      result = result && (getErrorCode()
+          == other.getErrorCode());
+      result = result && getErrorMessage()
+          .equals(other.getErrorMessage());
       result = result && getUid()
           .equals(other.getUid());
       result = result && getToke()
@@ -282,6 +399,13 @@ public final class AuthenticateResponseProto {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + STATUS_FIELD_NUMBER;
+      hash = (53 * hash) + getStatus();
+      hash = (37 * hash) + ERRORCODE_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getErrorCode());
+      hash = (37 * hash) + ERRORMESSAGE_FIELD_NUMBER;
+      hash = (53 * hash) + getErrorMessage().hashCode();
       hash = (37 * hash) + UID_FIELD_NUMBER;
       hash = (53 * hash) + getUid().hashCode();
       hash = (37 * hash) + TOKE_FIELD_NUMBER;
@@ -402,7 +526,7 @@ public final class AuthenticateResponseProto {
       }
 
       // Construct using com.lym.protobuf.AuthenticateResponseProto.AuthenticateResponse.newBuilder()
-      private Builder() {
+      public Builder() {
         maybeForceBuilderInitialization();
       }
 
@@ -418,6 +542,12 @@ public final class AuthenticateResponseProto {
       }
       public Builder clear() {
         super.clear();
+        status_ = 0;
+
+        errorCode_ = 0L;
+
+        errorMessage_ = "";
+
         uid_ = "";
 
         toke_ = "";
@@ -446,6 +576,9 @@ public final class AuthenticateResponseProto {
 
       public com.lym.protobuf.AuthenticateResponseProto.AuthenticateResponse buildPartial() {
         com.lym.protobuf.AuthenticateResponseProto.AuthenticateResponse result = new com.lym.protobuf.AuthenticateResponseProto.AuthenticateResponse(this);
+        result.status_ = status_;
+        result.errorCode_ = errorCode_;
+        result.errorMessage_ = errorMessage_;
         result.uid_ = uid_;
         result.toke_ = toke_;
         result.timestamp_ = timestamp_;
@@ -490,6 +623,16 @@ public final class AuthenticateResponseProto {
 
       public Builder mergeFrom(com.lym.protobuf.AuthenticateResponseProto.AuthenticateResponse other) {
         if (other == com.lym.protobuf.AuthenticateResponseProto.AuthenticateResponse.getDefaultInstance()) return this;
+        if (other.getStatus() != 0) {
+          setStatus(other.getStatus());
+        }
+        if (other.getErrorCode() != 0L) {
+          setErrorCode(other.getErrorCode());
+        }
+        if (!other.getErrorMessage().isEmpty()) {
+          errorMessage_ = other.errorMessage_;
+          onChanged();
+        }
         if (!other.getUid().isEmpty()) {
           uid_ = other.uid_;
           onChanged();
@@ -528,9 +671,130 @@ public final class AuthenticateResponseProto {
         return this;
       }
 
+      private int status_ ;
+      /**
+       * <code>int32 status = 1;</code>
+       */
+      public int getStatus() {
+        return status_;
+      }
+      /**
+       * <code>int32 status = 1;</code>
+       */
+      public Builder setStatus(int value) {
+        
+        status_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int32 status = 1;</code>
+       */
+      public Builder clearStatus() {
+        
+        status_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private long errorCode_ ;
+      /**
+       * <code>int64 errorCode = 2;</code>
+       */
+      public long getErrorCode() {
+        return errorCode_;
+      }
+      /**
+       * <code>int64 errorCode = 2;</code>
+       */
+      public Builder setErrorCode(long value) {
+        
+        errorCode_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>int64 errorCode = 2;</code>
+       */
+      public Builder clearErrorCode() {
+        
+        errorCode_ = 0L;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object errorMessage_ = "";
+      /**
+       * <code>string errorMessage = 3;</code>
+       */
+      public java.lang.String getErrorMessage() {
+        java.lang.Object ref = errorMessage_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          errorMessage_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string errorMessage = 3;</code>
+       */
+      public com.google.protobuf.ByteString
+          getErrorMessageBytes() {
+        java.lang.Object ref = errorMessage_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          errorMessage_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string errorMessage = 3;</code>
+       */
+      public Builder setErrorMessage(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        errorMessage_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string errorMessage = 3;</code>
+       */
+      public Builder clearErrorMessage() {
+        
+        errorMessage_ = getDefaultInstance().getErrorMessage();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string errorMessage = 3;</code>
+       */
+      public Builder setErrorMessageBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        errorMessage_ = value;
+        onChanged();
+        return this;
+      }
+
       private java.lang.Object uid_ = "";
       /**
-       * <code>string uid = 1;</code>
+       * <code>string uid = 4;</code>
        */
       public java.lang.String getUid() {
         java.lang.Object ref = uid_;
@@ -545,7 +809,7 @@ public final class AuthenticateResponseProto {
         }
       }
       /**
-       * <code>string uid = 1;</code>
+       * <code>string uid = 4;</code>
        */
       public com.google.protobuf.ByteString
           getUidBytes() {
@@ -561,7 +825,7 @@ public final class AuthenticateResponseProto {
         }
       }
       /**
-       * <code>string uid = 1;</code>
+       * <code>string uid = 4;</code>
        */
       public Builder setUid(
           java.lang.String value) {
@@ -574,7 +838,7 @@ public final class AuthenticateResponseProto {
         return this;
       }
       /**
-       * <code>string uid = 1;</code>
+       * <code>string uid = 4;</code>
        */
       public Builder clearUid() {
         
@@ -583,7 +847,7 @@ public final class AuthenticateResponseProto {
         return this;
       }
       /**
-       * <code>string uid = 1;</code>
+       * <code>string uid = 4;</code>
        */
       public Builder setUidBytes(
           com.google.protobuf.ByteString value) {
@@ -599,7 +863,7 @@ public final class AuthenticateResponseProto {
 
       private java.lang.Object toke_ = "";
       /**
-       * <code>string toke = 2;</code>
+       * <code>string toke = 5;</code>
        */
       public java.lang.String getToke() {
         java.lang.Object ref = toke_;
@@ -614,7 +878,7 @@ public final class AuthenticateResponseProto {
         }
       }
       /**
-       * <code>string toke = 2;</code>
+       * <code>string toke = 5;</code>
        */
       public com.google.protobuf.ByteString
           getTokeBytes() {
@@ -630,7 +894,7 @@ public final class AuthenticateResponseProto {
         }
       }
       /**
-       * <code>string toke = 2;</code>
+       * <code>string toke = 5;</code>
        */
       public Builder setToke(
           java.lang.String value) {
@@ -643,7 +907,7 @@ public final class AuthenticateResponseProto {
         return this;
       }
       /**
-       * <code>string toke = 2;</code>
+       * <code>string toke = 5;</code>
        */
       public Builder clearToke() {
         
@@ -652,7 +916,7 @@ public final class AuthenticateResponseProto {
         return this;
       }
       /**
-       * <code>string toke = 2;</code>
+       * <code>string toke = 5;</code>
        */
       public Builder setTokeBytes(
           com.google.protobuf.ByteString value) {
@@ -668,13 +932,13 @@ public final class AuthenticateResponseProto {
 
       private long timestamp_ ;
       /**
-       * <code>int64 timestamp = 3;</code>
+       * <code>int64 timestamp = 6;</code>
        */
       public long getTimestamp() {
         return timestamp_;
       }
       /**
-       * <code>int64 timestamp = 3;</code>
+       * <code>int64 timestamp = 6;</code>
        */
       public Builder setTimestamp(long value) {
         
@@ -683,7 +947,7 @@ public final class AuthenticateResponseProto {
         return this;
       }
       /**
-       * <code>int64 timestamp = 3;</code>
+       * <code>int64 timestamp = 6;</code>
        */
       public Builder clearTimestamp() {
         
@@ -755,10 +1019,11 @@ public final class AuthenticateResponseProto {
   static {
     java.lang.String[] descriptorData = {
       "\n\037AuthenticateResponseProto.proto\022\020com.l" +
-      "ym.protobuf\"D\n\024AuthenticateResponse\022\013\n\003u" +
-      "id\030\001 \001(\t\022\014\n\004toke\030\002 \001(\t\022\021\n\ttimestamp\030\003 \001(" +
-      "\003B-\n\020com.lym.protobufB\031AuthenticateRespo" +
-      "nseProtob\006proto3"
+      "ym.protobuf\"}\n\024AuthenticateResponse\022\016\n\006s" +
+      "tatus\030\001 \001(\005\022\021\n\terrorCode\030\002 \001(\003\022\024\n\014errorM" +
+      "essage\030\003 \001(\t\022\013\n\003uid\030\004 \001(\t\022\014\n\004toke\030\005 \001(\t\022" +
+      "\021\n\ttimestamp\030\006 \001(\003B-\n\020com.lym.protobufB\031" +
+      "AuthenticateResponseProtob\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -777,7 +1042,7 @@ public final class AuthenticateResponseProto {
     internal_static_com_lym_protobuf_AuthenticateResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_lym_protobuf_AuthenticateResponse_descriptor,
-        new java.lang.String[] { "Uid", "Toke", "Timestamp", });
+        new java.lang.String[] { "Status", "ErrorCode", "ErrorMessage", "Uid", "Toke", "Timestamp", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

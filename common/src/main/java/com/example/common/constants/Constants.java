@@ -10,7 +10,7 @@ public interface Constants {
     /**
      * 消息头的总长度
      */
-    int request_header_length = 20;
+    int request_header_length = 24;
 
     /**
      * app sdk版本号

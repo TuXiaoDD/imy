@@ -10,7 +10,7 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class ConnectDispatcherInstanceClient implements LifeCycle {
+public class DispatcherInstanceClient implements LifeCycle {
 
 
     private final DispatcherInstanceInfo dispatcherInstanceInfo;
@@ -18,12 +18,12 @@ public class ConnectDispatcherInstanceClient implements LifeCycle {
     private EventLoopGroup eventLoopGroup;
     private SocketChannel socketChannel;
 
-    public ConnectDispatcherInstanceClient(DispatcherInstanceInfo instance) {
+    public DispatcherInstanceClient(DispatcherInstanceInfo instance) {
         this.dispatcherInstanceInfo = instance;
         init();
     }
 
-    public SocketChannel getSocketChannel(){
+    public SocketChannel getSocketChannel() {
         return socketChannel;
     }
 
@@ -42,22 +42,25 @@ public class ConnectDispatcherInstanceClient implements LifeCycle {
                 .handler(new ChannelInitializer<SocketChannel>() {
                     @Override
                     protected void initChannel(SocketChannel socketChannel) throws Exception {
-                        socketChannel.pipeline().addLast(new ConnectDispatcherInstanceClientHandler());
+                        socketChannel.pipeline().addLast(new DispatcherInstanceHandler());
                     }
                 }).connect(this.dispatcherInstanceInfo.getHost(), this.dispatcherInstanceInfo.getPort());
         try {
-            channelFuture.addListener(new ChannelFutureListener() {
-                        @Override
-                        public void operationComplete(ChannelFuture channelFuture) throws Exception {
-                            if (channelFuture.isSuccess()) {
-                                socketChannel = (SocketChannel) channelFuture.channel();
-                                log.info("client connect");
-                            } else {
-                                channelFuture.channel().close();
-                                shutdown();
-                            }
-                        }
-                    }).channel().closeFuture()
+            socketChannel = (SocketChannel) channelFuture.channel();
+            socketChannel.closeFuture();
+            log.info("连接dispatcherInstance成功 {}", socketChannel.id());
+//            channelFuture.addListener(new ChannelFutureListener() {
+//                        @Override
+//                        public void operationComplete(ChannelFuture channelFuture) throws Exception {
+//                            if (channelFuture.isSuccess()) {
+//
+//                                log.info("client connect");
+//                            } else {
+//                                channelFuture.channel().close();
+//                                shutdown();
+//                            }
+//                        }
+//                    }).channel().closeFuture()
 //                    .sync()
             ;
         } catch (Exception e) {

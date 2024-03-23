@@ -2,10 +2,7 @@ package com.lym.handler;
 
 import com.lym.context.DispatcherInstanceManager;
 import com.lym.entity.DispatcherInstance;
-import com.lym.entity.DispatcherInstanceInfo;
 import com.lym.protobuf.AuthenticateRequestProto;
-import com.lym.protobuf.AuthenticateResponseProto;
-import io.netty.channel.socket.SocketChannel;
 
 public class RequestHandler {
 
@@ -23,7 +20,6 @@ public class RequestHandler {
         DispatcherInstanceManager dispatcherInstanceManager = DispatcherInstanceManager.getInstance();
         DispatcherInstance dispatcherInstance = dispatcherInstanceManager.chooseInstance();
         dispatcherInstance.authenticate(authenticateRequest);
-
     }
 
 }

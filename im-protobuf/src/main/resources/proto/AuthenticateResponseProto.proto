@@ -8,7 +8,10 @@ option java_package="com.lym.protobuf";
 option java_outer_classname="AuthenticateResponseProto";
 
 message AuthenticateResponse{
-  string uid=1;
-  string toke=2;
-  int64 timestamp=3;
+  int32 status=1;
+  int64 errorCode=2;
+  string errorMessage=3;
+  string uid=4;
+  string toke=5;
+  int64 timestamp=6;
 }

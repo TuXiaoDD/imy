@@ -37,5 +37,10 @@
             <artifactId>lombok</artifactId>
             <version>1.18.26</version>
         </dependency>
+        <dependency>
+            <groupId>com.lym</groupId>
+            <artifactId>im-protobuf</artifactId>
+            <version>1.0.0</version>
+        </dependency>
     </dependencies>
 </project>

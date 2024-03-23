@@ -1,5 +1,7 @@
 package com.lym.handler;
 
+import com.alibaba.fastjson2.JSONObject;
+import com.example.common.netty.Message;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandler;
@@ -28,9 +30,8 @@ public class ClientHandler implements ChannelInboundHandler {
     @Override
     public void channelRead(ChannelHandlerContext channelHandlerContext, Object o) throws Exception {
         ByteBuf byteBuf = (ByteBuf) o;
-        byte[] bytes = new byte[byteBuf.readableBytes()];
-        byteBuf.readBytes(bytes);
-        System.out.println(new String(bytes));
+        Message message = new Message(byteBuf);
+        System.out.println(JSONObject.toJSONString(message));
 
 
     }

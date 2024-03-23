@@ -24,9 +24,12 @@ public class Message {
     protected int requestType;
     /**
      * 请求顺序
-     *
      */
     protected int sequence;
+    /**
+     * 消息类型
+     */
+    protected int messageType;
 
     /**
      * 消息内容长度 必须填
@@ -40,15 +43,13 @@ public class Message {
      */
     protected ByteBuf byteBuf;
 
-    public Message() {
-
-    }
 
     public Message(ByteBuf byteBuf) {
         this.headerLength = byteBuf.readInt();
         this.appSdkVersion = byteBuf.readInt();
-        this.requestType = byteBuf.readInt();
+        this.messageType = byteBuf.readInt();
         this.sequence = byteBuf.readInt();
+        this.requestType = byteBuf.readInt();
         this.bodyLength = byteBuf.readInt();
         int readableBytes = byteBuf.readableBytes();
 
@@ -67,19 +68,21 @@ public class Message {
         this.body = bytes;
 
         byteBuf.resetReaderIndex();
-        this.byteBuf=byteBuf;
+        this.byteBuf = byteBuf;
     }
 
     public Message(int headerLength,
                    int appSdkVersion,
-                   int requestType,
+                   int messageType,
                    int sequence,
+                   int requestType,
                    int bodyLength,
                    byte[] body) {
         this.headerLength = headerLength;
         this.appSdkVersion = appSdkVersion;
-        this.requestType = requestType;
+        this.messageType = messageType;
         this.sequence = sequence;
+        this.requestType = requestType;
         this.bodyLength = bodyLength;
         this.body = body;
 
@@ -87,8 +90,9 @@ public class Message {
         this.byteBuf = Unpooled.buffer(Constants.headLengthLength + headerLength + Constants.bodyLengthLength + bodyLength);
         byteBuf.writeInt(headerLength);
         byteBuf.writeInt(appSdkVersion);
-        byteBuf.writeInt(requestType);
+        byteBuf.writeInt(messageType);
         byteBuf.writeInt(sequence);
+        byteBuf.writeInt(requestType);
         byteBuf.writeInt(bodyLength);
         byteBuf.writeBytes(body);
     }

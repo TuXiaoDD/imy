@@ -2,6 +2,7 @@ package com.lym;
 
 import com.example.common.LifeCycle;
 import com.example.common.constants.Constants;
+import com.example.common.enums.MessageType;
 import com.example.common.enums.RequestType;
 import com.lym.handler.ClientHandler;
 import com.lym.protobuf.AuthenticateRequestProto;
@@ -43,21 +44,18 @@ public class ImClient implements LifeCycle {
                 .option(ChannelOption.SO_KEEPALIVE, true)
                 .handler(new ChannelInitializer<SocketChannel>() {
                     @Override
-                    protected void initChannel(SocketChannel socketChannel) throws Exception {
+                    protected void initChannel(SocketChannel socketChannel) {
                         socketChannel.pipeline().addLast(new ClientHandler());
                     }
                 }).connect(this.host, this.port);
         try {
-            channelFuture.addListener(new ChannelFutureListener() {
-                @Override
-                public void operationComplete(ChannelFuture channelFuture) throws Exception {
-                    if (channelFuture.isSuccess()) {
-                        socketChannel = (SocketChannel) channelFuture.channel();
-                        log.info("client connect");
-                    } else {
-                        channelFuture.channel().close();
-                        shutdown();
-                    }
+            channelFuture.addListener((ChannelFutureListener) channelFuture1 -> {
+                if (channelFuture1.isSuccess()) {
+                    socketChannel = (SocketChannel) channelFuture1.channel();
+                    log.info("client connect {}",socketChannel.id());
+                } else {
+                    channelFuture1.channel().close();
+                    shutdown();
                 }
             }).channel().closeFuture()
 //                    .sync()
@@ -82,9 +80,10 @@ public class ImClient implements LifeCycle {
         // app 版本号
         byteBuf.writeInt(Constants.app_sdk_version);
         // 授权 请求
-        byteBuf.writeInt(RequestType.AUTH.getValue());
+        byteBuf.writeInt(MessageType.AUTH.getValue());
         // 消息序列号
         byteBuf.writeInt(Constants.request_sequence_default);
+        byteBuf.writeInt(RequestType.REQUEST.getVal());
 
         byteBuf.writeInt(body.length);
 
@@ -102,9 +101,10 @@ public class ImClient implements LifeCycle {
         // app 版本号
         byteBuf.writeInt(Constants.app_sdk_version);
         // 授权 请求
-        byteBuf.writeInt(RequestType.TEXT_MSG.getValue());
+        byteBuf.writeInt(MessageType.TEXT_MSG.getValue());
         // 消息序列号
         byteBuf.writeInt(Constants.request_sequence_default);
+        byteBuf.writeInt(RequestType.REQUEST.getVal());
         byteBuf.writeInt(body.length);
         byteBuf.writeBytes(body);
         socketChannel.writeAndFlush(byteBuf);
