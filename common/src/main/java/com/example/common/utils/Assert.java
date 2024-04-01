@@ -95,17 +95,6 @@ public abstract class Assert {
         }
     }
 
-    public static void isAnyEmpty(String errMessage, Object... objects) {
-        if (!DataUtils.isAnyEmpty(objects)) {
-            throw new BizException(errMessage);
-        }
-    }
-
-    public static void isAnyNotEmpty(String errMessage, Object... objects) {
-        if (!DataUtils.isAnyNotEmpty(objects)) {
-            throw new BizException(errMessage);
-        }
-    }
 
     public static void isEmpty(Object object, String errMessage) {
         if (DataUtils.isNotEmpty(object)) {

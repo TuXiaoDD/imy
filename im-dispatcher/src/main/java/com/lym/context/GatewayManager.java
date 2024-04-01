@@ -4,6 +4,8 @@ import io.netty.channel.socket.SocketChannel;
 
 import java.util.concurrent.ConcurrentHashMap;
 
+import static com.example.common.constants.Constants.socketKeyFunc;
+
 public class GatewayManager {
 
     private static ConcurrentHashMap<String, SocketChannel> map = new ConcurrentHashMap<String, SocketChannel>();
@@ -18,15 +20,14 @@ public class GatewayManager {
     }
 
     public void put(SocketChannel socketChannel) {
-        map.put(socketChannel.id().asLongText(), socketChannel);
+        map.put(socketKeyFunc.apply(socketChannel), socketChannel);
     }
 
-    public SocketChannel get(String channelId) {
-        return map.get(channelId);
+    public SocketChannel get(String hostPort) {
+        return map.get(hostPort);
     }
 
-    public void remove(String channelId) {
-        if (map.containsKey(channelId))
-            map.remove(channelId);
+    public void remove(String hostPort) {
+        map.remove(hostPort);
     }
 }
