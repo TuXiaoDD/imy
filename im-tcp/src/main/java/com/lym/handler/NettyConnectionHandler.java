@@ -1,28 +1,21 @@
 package com.lym.handler;
 
+import com.example.common.constants.RedisConstants;
+import com.example.common.utils.JedisUtil;
 import com.example.common.utils.RemotingUtil;
 import com.lym.context.SessionManager;
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
-import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
+import io.netty.channel.socket.SocketChannel;
 import io.netty.handler.timeout.IdleState;
 import io.netty.handler.timeout.IdleStateEvent;
 import lombok.extern.slf4j.Slf4j;
 
+import static com.example.common.constants.Constants.channelIdFunc;
+
 @Slf4j
 public class NettyConnectionHandler extends ChannelInboundHandlerAdapter {
 
-
-    public void channelRegistered(ChannelHandlerContext ctx) throws Exception {
-        log.info("NettyHttpConnectionHandler channelRegistered  {}", RemotingUtil.getLocalAddress());
-
-    }
-
-    public void channelUnregistered(ChannelHandlerContext ctx) throws Exception {
-        log.info("NettyHttpConnectionHandler channelUnregistered {}", RemotingUtil.getLocalAddress());
-    }
 
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         log.info("NettyHttpConnectionHandler channelActive {}", RemotingUtil.getLocalAddress());
@@ -31,11 +24,14 @@ public class NettyConnectionHandler extends ChannelInboundHandlerAdapter {
 
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
         log.info("NettyHttpConnectionHandler channelInactive {}", RemotingUtil.getLocalAddress());
-        // todo uid
-        Long uid = RemotingUtil.getUid(ctx.channel());
-        if (uid != null) {
-            SessionManager.getInstance().removeSession(uid);
-        }
+        SocketChannel channel = (SocketChannel) ctx.channel();
+        SessionManager instance = SessionManager.getInstance();
+
+        String channelId = channelIdFunc.apply(channel);
+        JedisUtil.del(RedisConstants.sessionPrefix + instance.getUidByChannelId(channelId));
+
+        instance.removeSession(channel);
+
 
     }
 

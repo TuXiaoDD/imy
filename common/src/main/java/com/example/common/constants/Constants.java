@@ -29,8 +29,8 @@ public interface Constants {
      */
     int request_sequence_default = 1;
 
-    int auth_status_success =200;
+    int auth_status_success = 200;
 
 
-    Function<SocketChannel, String> socketKeyFunc = (socketChannel) -> String.format("%s:%s", socketChannel.remoteAddress().getHostName(), socketChannel.remoteAddress().getPort());
+    Function<SocketChannel, String> channelIdFunc = (socketChannel) -> String.format("%s:%s", socketChannel.remoteAddress().getHostName(), socketChannel.remoteAddress().getPort());
 }

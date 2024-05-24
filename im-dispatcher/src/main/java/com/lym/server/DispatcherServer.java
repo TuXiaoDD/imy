@@ -11,7 +11,9 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class DispatcherServer implements LifeCycle {
 
     private ServerBootstrap bootstrap;
@@ -48,9 +50,10 @@ public class DispatcherServer implements LifeCycle {
                     }
                 }).bind(this.host, this.port);
         try {
+            log.info("分发系统已启动");
             channelFuture.channel().closeFuture().sync();
         } catch (Exception e) {
-
+            log.error("err ",e);
         }
 
     }

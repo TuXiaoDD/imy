@@ -1,6 +1,8 @@
 package com.lym.client;
 
 import com.example.common.LifeCycle;
+import com.lym.context.DispatcherInstanceManager;
+import com.lym.entity.DispatcherInstance;
 import com.lym.entity.DispatcherInstanceInfo;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.*;
@@ -8,6 +10,8 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import lombok.extern.slf4j.Slf4j;
+
+import static com.example.common.constants.Constants.channelIdFunc;
 
 @Slf4j
 public class DispatcherInstanceClient implements LifeCycle {
@@ -46,22 +50,23 @@ public class DispatcherInstanceClient implements LifeCycle {
                     }
                 }).connect(this.dispatcherInstanceInfo.getHost(), this.dispatcherInstanceInfo.getPort());
         try {
-            socketChannel = (SocketChannel) channelFuture.channel();
-            socketChannel.closeFuture();
-            log.info("连接dispatcherInstance成功 {}", socketChannel.id());
-//            channelFuture.addListener(new ChannelFutureListener() {
-//                        @Override
-//                        public void operationComplete(ChannelFuture channelFuture) throws Exception {
-//                            if (channelFuture.isSuccess()) {
-//
-//                                log.info("client connect");
-//                            } else {
-//                                channelFuture.channel().close();
-//                                shutdown();
-//                            }
-//                        }
-//                    }).channel().closeFuture()
-//                    .sync()
+//            socketChannel = (SocketChannel) channelFuture.channel();
+//            socketChannel.closeFuture();
+            DispatcherInstanceManager dispatcherInstanceManager = DispatcherInstanceManager.getInstance();
+//            log.info("连接dispatcherInstance成功 {}", socketChannel.id());
+            channelFuture.addListener((ChannelFutureListener) future -> {
+                        SocketChannel channel = (SocketChannel) future.channel();
+                        if (future.isSuccess()) {
+                            DispatcherInstance dispatcherInstance = new DispatcherInstance(channel);
+                            dispatcherInstanceManager.put(channelIdFunc.apply(channel), dispatcherInstance);
+                            log.info("client connect {}",channel.remoteAddress());
+                        } else {
+                            channel.close();
+                            shutdown();
+                        }
+                    })
+//                    .channel().closeFuture()
+                    .sync()
             ;
         } catch (Exception e) {
             log.error(e.getMessage());

@@ -4,23 +4,23 @@ import io.netty.channel.socket.SocketChannel;
 
 import java.util.concurrent.ConcurrentHashMap;
 
-import static com.example.common.constants.Constants.socketKeyFunc;
+import static com.example.common.constants.Constants.channelIdFunc;
 
-public class GatewayManager {
+public class GatewayInstanceManager {
 
     private static ConcurrentHashMap<String, SocketChannel> map = new ConcurrentHashMap<String, SocketChannel>();
 
-    private static final GatewayManager instance = new GatewayManager();
+    private static final GatewayInstanceManager instance = new GatewayInstanceManager();
 
-    private GatewayManager() {
+    private GatewayInstanceManager() {
     }
 
-    public static GatewayManager getInstance() {
+    public static GatewayInstanceManager getInstance() {
         return instance;
     }
 
     public void put(SocketChannel socketChannel) {
-        map.put(socketKeyFunc.apply(socketChannel), socketChannel);
+        map.put(channelIdFunc.apply(socketChannel), socketChannel);
     }
 
     public SocketChannel get(String hostPort) {

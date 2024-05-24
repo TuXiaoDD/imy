@@ -26,7 +26,7 @@ public class RequestHandler {
         builder.setUid(uid);
         builder.setTimestamp(timestamp);
         try {
-            // sso
+            // todo sso
             log.info("authenticate time {} toke {} uid {}", timestamp, toke, uid);
             builder.setStatus(100);
         } catch (Exception e) {//todo
